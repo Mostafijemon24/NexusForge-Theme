@@ -1,0 +1,19 @@
+/*
+Theme Name: NexusForge
+Author: NexusForge
+Description: A premium, lightweight, fluidly responsive hybrid WordPress theme with a soft-vibrant visual identity (muted teal, fresh mint, warm ivory). Elementor-friendly but never Elementor-dependent. Built on PHP templates + theme.json + CSS custom properties.
+Version: 1.0.3
+Requires at least: 6.4
+Tested up to: 7.1
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: nexusforge
+Tags: block-styles, custom-background, custom-colors, custom-header, custom-logo, custom-menu, editor-style, featured-images, footer-widgets, threaded-comments, translation-ready, wide-blocks
+*/
+
+/*
+ * This file carries the required theme header only.
+ * The design system lives in assets/css/tokens.css + assets/css/main.css,
+ * enqueued through inc/enqueue.php. Do not add rules here.
+ */

@@ -1,0 +1,31 @@
+/**
+ * NexusForge — block editor styles.
+ * Keeps the editor canvas aligned with the front end. Tokens are enqueued
+ * separately via enqueue_block_editor_assets.
+ */
+
+.editor-styles-wrapper {
+	font-family: var(--nexusforge-font);
+	font-size: var(--nexusforge-fs-body);
+	line-height: var(--nexusforge-lh-body);
+	color: var(--nexusforge-color-text);
+	background: var(--nexusforge-color-canvas);
+}
+
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4 {
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	line-height: var(--nexusforge-lh-heading);
+	color: var(--nexusforge-color-text);
+}
+
+.editor-styles-wrapper a { color: var(--nexusforge-color-brand-2); }
+
+.editor-styles-wrapper blockquote {
+	border-left: 3px solid var(--nexusforge-color-brand);
+	padding-left: var(--nexusforge-space-5);
+	font-style: italic;
+}

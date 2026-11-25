@@ -1,0 +1,813 @@
+/**
+ * NexusForge — main stylesheet.
+ * Base + layout + components + templates. All values come from tokens.css.
+ * Mobile-first; fluid via clamp()/minmax(); no horizontal overflow by design.
+ */
+
+/* ============================================================= RESET/BASE */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	font-family: var(--nexusforge-font);
+	font-size: var(--nexusforge-fs-body);
+	line-height: var(--nexusforge-lh-body);
+	color: var(--nexusforge-color-text);
+	background: var(--nexusforge-color-canvas);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	overflow-wrap: break-word;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0 0 var(--nexusforge-space-4);
+	color: var(--nexusforge-color-text);
+	line-height: var(--nexusforge-lh-heading);
+	letter-spacing: -0.02em;
+	font-weight: 800;
+}
+
+h1 { font-size: var(--nexusforge-fs-h1); }
+h2 { font-size: var(--nexusforge-fs-h2); }
+h3 { font-size: var(--nexusforge-fs-h3); font-weight: 700; }
+
+p { margin: 0 0 var(--nexusforge-space-4); }
+
+a {
+	color: var(--nexusforge-color-brand-2);
+	text-underline-offset: 3px;
+	text-decoration-color: var(--nexusforge-color-border);
+}
+
+a:hover { color: var(--nexusforge-color-brand); }
+
+ul, ol { padding-left: 1.25rem; }
+
+blockquote {
+	margin: var(--nexusforge-space-5) 0;
+	padding: 0.25rem 0 0.25rem var(--nexusforge-space-5);
+	border-left: 3px solid var(--nexusforge-color-brand);
+	font-size: 1.125rem;
+	font-style: italic;
+	color: var(--nexusforge-color-text);
+}
+
+code, pre {
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+:focus-visible {
+	outline: var(--nexusforge-focus-ring);
+	outline-offset: var(--nexusforge-focus-offset);
+	border-radius: var(--nexusforge-radius-sm);
+}
+
+::selection {
+	background: var(--nexusforge-mint);
+	color: var(--nexusforge-teal-deep);
+}
+
+/* ============================================================= UTILITIES */
+.nexusforge-container {
+	width: 100%;
+	max-width: var(--nexusforge-wide);
+	margin-inline: auto;
+	padding-inline: var(--nexusforge-gutter);
+}
+
+.nexusforge-container--narrow {
+	max-width: var(--nexusforge-content);
+}
+
+.nexusforge-section {
+	padding-block: var(--nexusforge-section-y);
+}
+
+.screen-reader-text {
+	position: absolute !important;
+	clip-path: inset(50%);
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.skip-link {
+	position: absolute;
+	left: var(--nexusforge-space-2);
+	top: -60px;
+	z-index: var(--nexusforge-z-skip);
+	padding: var(--nexusforge-space-2) var(--nexusforge-space-4);
+	background: var(--nexusforge-color-brand);
+	color: var(--nexusforge-white);
+	border-radius: var(--nexusforge-radius-sm);
+	font-weight: 700;
+	transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+	top: var(--nexusforge-space-2);
+	color: var(--nexusforge-white);
+}
+
+.nexusforge-eyebrow {
+	font-size: var(--nexusforge-fs-small);
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	/* Deep teal: passes AA on ivory, white AND mint-pale bands (brand teal
+	   is only 4.45:1 on mint-pale). */
+	color: var(--nexusforge-color-brand-2);
+	margin: 0 0 var(--nexusforge-space-3);
+}
+
+/* ============================================================= BUTTONS */
+.nexusforge-btn,
+.wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--nexusforge-space-2);
+	min-height: 44px;
+	padding: 0.75rem 1.4rem;
+	border: 1.5px solid transparent;
+	border-radius: var(--nexusforge-radius-md);
+	font: inherit;
+	font-weight: 700;
+	line-height: 1.2;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.nexusforge-btn--primary {
+	background: var(--nexusforge-color-brand);
+	color: var(--nexusforge-white);
+}
+
+.nexusforge-btn--primary:hover,
+.nexusforge-btn--primary:focus-visible {
+	background: var(--nexusforge-color-brand-2);
+	color: var(--nexusforge-white);
+}
+
+.nexusforge-btn--secondary {
+	background: transparent;
+	color: var(--nexusforge-color-brand-2);
+	border-color: var(--nexusforge-color-brand);
+}
+
+.nexusforge-btn--secondary:hover,
+.nexusforge-btn--secondary:focus-visible {
+	background: var(--nexusforge-mint-pale);
+}
+
+.nexusforge-btn--ghost {
+	background: transparent;
+	color: var(--nexusforge-color-text-2);
+	border: none;
+	text-decoration: underline;
+	text-decoration-color: var(--nexusforge-color-border);
+	min-height: auto;
+	padding-inline: 0.25rem;
+}
+
+.nexusforge-btn[disabled],
+.nexusforge-btn--disabled {
+	background: var(--nexusforge-color-border);
+	color: #8a988f;
+	cursor: not-allowed;
+	border-color: transparent;
+}
+
+/* ============================================================= FORMS */
+label { font-weight: 600; font-size: 0.9375rem; }
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+input[type="date"],
+textarea,
+select {
+	width: 100%;
+	min-height: 44px;
+	padding: 0.7rem 0.9rem;
+	font: inherit;
+	color: var(--nexusforge-color-text);
+	background: var(--nexusforge-color-canvas);
+	border: 1.5px solid var(--nexusforge-color-border);
+	border-radius: var(--nexusforge-radius-md);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+	outline: none;
+	border-color: var(--nexusforge-color-brand);
+	box-shadow: 0 0 0 4px var(--nexusforge-mint);
+}
+
+.nexusforge-form-notice {
+	padding: 0.6rem 0.75rem;
+	background: var(--nexusforge-coral-pale);
+	border: 1px solid var(--nexusforge-coral);
+	border-radius: var(--nexusforge-radius-sm);
+	color: var(--nexusforge-coral-ink);
+	font-size: var(--nexusforge-fs-small);
+}
+
+/* ============================================================= SEARCH FORM */
+.search-form {
+	display: flex;
+	gap: var(--nexusforge-space-3);
+	flex-wrap: wrap;
+}
+
+.search-form .search-field { flex: 1 1 220px; }
+
+/* ============================================================= BADGES/TAGS */
+.nexusforge-tag {
+	display: inline-flex;
+	align-items: center;
+	font-size: var(--nexusforge-fs-small);
+	font-weight: 600;
+	padding: 0.25rem 0.7rem;
+	border-radius: var(--nexusforge-radius-pill);
+	background: var(--nexusforge-mint);
+	color: var(--nexusforge-teal-deep);
+}
+
+.nexusforge-tag--outline {
+	background: transparent;
+	border: 1px solid var(--nexusforge-color-border);
+	color: var(--nexusforge-color-text-2);
+}
+
+.nexusforge-tag--accent {
+	background: var(--nexusforge-coral-pale);
+	color: var(--nexusforge-coral-ink);
+}
+
+/* ============================================================= CARDS */
+.nexusforge-card {
+	background: var(--nexusforge-color-surface);
+	border: 1px solid var(--nexusforge-color-border);
+	border-radius: var(--nexusforge-radius-lg);
+	overflow: hidden;
+}
+
+.nexusforge-card__body { padding: var(--nexusforge-space-5); }
+
+.nexusforge-card__title { font-size: 1.125rem; font-weight: 700; margin: 0 0 var(--nexusforge-space-2); }
+
+.nexusforge-card__excerpt { color: var(--nexusforge-color-text-2); margin: 0; }
+
+/* ============================================================= HEADER / NAV */
+.nexusforge-header {
+	position: relative;
+	z-index: var(--nexusforge-z-header);
+	background: var(--nexusforge-color-canvas);
+	border-bottom: 1px solid var(--nexusforge-color-border);
+}
+
+.nexusforge-header__inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--nexusforge-space-5);
+	padding-block: var(--nexusforge-space-4);
+}
+
+.nexusforge-branding {
+	display: flex;
+	align-items: center;
+	gap: var(--nexusforge-space-3);
+	font-size: 1.375rem;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+
+.nexusforge-branding a { color: var(--nexusforge-color-text); text-decoration: none; }
+
+.site-title { margin: 0; font-size: inherit; font-weight: inherit; line-height: 1; }
+
+.nexusforge-trust__label { font-size: var(--nexusforge-fs-small); color: var(--nexusforge-color-text-2); font-weight: 500; }
+
+.nexusforge-branding .nexusforge-dot { color: var(--nexusforge-color-brand); }
+
+.nexusforge-branding img { max-height: 48px; width: auto; }
+
+/* primary nav */
+.nexusforge-primary-nav { display: flex; align-items: center; }
+
+.nexusforge-menu,
+.nexusforge-sub-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	gap: clamp(1rem, 0.5rem + 1.2vw, 1.9rem);
+}
+
+.nexusforge-menu li { position: relative; }
+
+.nexusforge-menu a,
+.nexusforge-menu-link {
+	display: inline-block;
+	padding: 0.4rem 0;
+	font-weight: 500;
+	color: var(--nexusforge-color-text);
+	text-decoration: none;
+}
+
+.nexusforge-menu .current-menu-item > a,
+.nexusforge-menu a:hover {
+	color: var(--nexusforge-color-brand-2);
+	font-weight: 600;
+}
+
+/* dropdowns */
+.nexusforge-sub-menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	flex-direction: column;
+	gap: 0;
+	min-width: 220px;
+	padding: var(--nexusforge-space-2);
+	background: var(--nexusforge-color-surface);
+	border: 1px solid var(--nexusforge-color-border);
+	border-radius: var(--nexusforge-radius-md);
+	box-shadow: var(--nexusforge-shadow-md);
+	z-index: var(--nexusforge-z-dropdown);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(6px);
+	transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+
+.nexusforge-menu li:hover > .nexusforge-sub-menu,
+.nexusforge-menu li:focus-within > .nexusforge-sub-menu,
+.nexusforge-menu li.is-open > .nexusforge-sub-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.nexusforge-sub-menu a { padding: 0.5rem 0.6rem; border-radius: var(--nexusforge-radius-sm); width: 100%; }
+
+.nexusforge-sub-menu a:hover { background: var(--nexusforge-mint-pale); }
+
+/* submenu toggle button (keyboard) */
+.nexusforge-submenu-toggle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	margin-left: 0.15rem;
+	padding: 0;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+.nexusforge-submenu-toggle__icon {
+	width: 9px;
+	height: 9px;
+	border-right: 2px solid currentColor;
+	border-bottom: 2px solid currentColor;
+	transform: rotate(45deg);
+	transition: transform 0.2s ease;
+	color: var(--nexusforge-color-text-2);
+}
+
+.nexusforge-submenu-toggle[aria-expanded="true"] .nexusforge-submenu-toggle__icon { transform: rotate(-135deg); }
+
+/* header actions */
+.nexusforge-header__actions {
+	display: flex;
+	align-items: center;
+	gap: var(--nexusforge-space-4);
+}
+
+/* menu toggle (hamburger) */
+.nexusforge-menu-toggle {
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	gap: 5px;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+.nexusforge-menu-toggle span {
+	display: block;
+	width: 22px;
+	height: 2px;
+	margin-inline: auto;
+	background: var(--nexusforge-color-text);
+	border-radius: 2px;
+	transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.nexusforge-menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nexusforge-menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nexusforge-menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============================================================= HERO */
+.nexusforge-hero {
+	position: relative;
+	overflow: hidden;
+	background: var(--nexusforge-color-canvas);
+	padding-block: var(--nexusforge-section-y);
+}
+
+.nexusforge-hero__inner { position: relative; z-index: 2; max-width: 760px; }
+
+.nexusforge-hero h1 { font-size: var(--nexusforge-fs-display); letter-spacing: -0.03em; margin-bottom: var(--nexusforge-space-5); }
+
+.nexusforge-hero__lead { font-size: clamp(1.0625rem, 1rem + 0.6vw, 1.25rem); color: var(--nexusforge-color-text-2); max-width: 56ch; }
+
+.nexusforge-hero__actions { display: flex; flex-wrap: wrap; gap: var(--nexusforge-space-3); margin-top: var(--nexusforge-space-6); }
+
+.nexusforge-hero__orb {
+	position: absolute;
+	right: -60px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: clamp(220px, 30vw, 420px);
+	aspect-ratio: 1;
+	border-radius: 50%;
+	background: radial-gradient(circle at 35% 35%, var(--nexusforge-mint), var(--nexusforge-mint-pale));
+	z-index: 1;
+	pointer-events: none;
+}
+
+/* ============================================================= GRIDS */
+.nexusforge-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: var(--nexusforge-space-5);
+}
+
+.nexusforge-grid--2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+
+/* feature/service item */
+.nexusforge-feature {
+	border: 1px solid var(--nexusforge-color-border);
+	border-radius: var(--nexusforge-radius-lg);
+	padding: var(--nexusforge-space-6);
+	background: var(--nexusforge-color-surface);
+}
+
+.nexusforge-feature__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 46px;
+	height: 46px;
+	border-radius: var(--nexusforge-radius-md);
+	background: var(--nexusforge-mint);
+	border: 1px solid var(--nexusforge-color-border);
+	color: var(--nexusforge-teal-deep);
+	margin-bottom: var(--nexusforge-space-4);
+}
+
+/* trust strip */
+.nexusforge-trust {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: var(--nexusforge-space-5);
+	padding-block: var(--nexusforge-space-5);
+	border-top: 1px solid var(--nexusforge-color-border);
+	border-bottom: 1px solid var(--nexusforge-color-border);
+}
+
+.nexusforge-trust__logos { display: flex; flex-wrap: wrap; gap: clamp(1rem, 0.5rem + 2vw, 2.8rem); color: #9aa8a1; font-weight: 700; }
+
+/* section head */
+.nexusforge-section__head { max-width: 640px; }
+
+/* bands */
+.nexusforge-band--surface { background: var(--nexusforge-color-surface); border-block: 1px solid var(--nexusforge-color-border); }
+.nexusforge-band--mint { background: var(--nexusforge-mint-pale); border-block: 1px solid var(--nexusforge-color-border); }
+.nexusforge-band--brand { background: var(--nexusforge-teal-deep); color: var(--nexusforge-white); text-align: center; }
+.nexusforge-band--brand h2 { color: var(--nexusforge-white); }
+.nexusforge-band--brand p { color: #c7e6dc; max-width: 52ch; margin-inline: auto; }
+
+/* process list */
+.nexusforge-steps { display: flex; flex-direction: column; }
+.nexusforge-step { display: flex; gap: var(--nexusforge-space-5); padding-block: var(--nexusforge-space-5); border-bottom: 1px solid var(--nexusforge-color-border); }
+.nexusforge-step:last-child { border-bottom: none; }
+.nexusforge-step__num { font-weight: 800; color: var(--nexusforge-color-brand); flex-shrink: 0; width: 2.2ch; }
+
+/* testimonial */
+.nexusforge-quote { max-width: 820px; margin-inline: auto; text-align: center; }
+.nexusforge-quote p { font-size: clamp(1.25rem, 1rem + 1.2vw, 1.6875rem); font-weight: 600; line-height: 1.45; }
+.nexusforge-quote__person { display: flex; align-items: center; justify-content: center; gap: var(--nexusforge-space-3); margin-top: var(--nexusforge-space-5); }
+.nexusforge-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--nexusforge-mint); border: 1px solid var(--nexusforge-color-border); flex-shrink: 0; }
+
+/* ============================================================= ENTRIES */
+.nexusforge-main { padding-block: var(--nexusforge-section-y); }
+
+.entry { margin-bottom: var(--nexusforge-space-10); }
+
+.entry-media { border-radius: var(--nexusforge-radius-md); overflow: hidden; margin-bottom: var(--nexusforge-space-4); }
+.entry-media img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.entry-media--placeholder { aspect-ratio: 16 / 9; background: linear-gradient(135deg, var(--nexusforge-mint), var(--nexusforge-mint-pale)); }
+
+.entry-title { margin-bottom: var(--nexusforge-space-3); }
+.entry-title a { color: inherit; text-decoration: none; }
+.entry-title a:hover { color: var(--nexusforge-color-brand-2); }
+
+.entry-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--nexusforge-space-3);
+	align-items: center;
+	font-size: var(--nexusforge-fs-small);
+	color: var(--nexusforge-color-text-2);
+	margin-bottom: var(--nexusforge-space-3);
+}
+
+.entry-content { max-width: var(--nexusforge-measure); }
+.entry-content > * { margin-left: auto; margin-right: auto; }
+
+.nexusforge-archive-header {
+	padding: var(--nexusforge-space-5) var(--nexusforge-space-6);
+	background: var(--nexusforge-mint-pale);
+	border: 1px solid var(--nexusforge-color-border);
+	border-radius: var(--nexusforge-radius-lg);
+	margin-bottom: var(--nexusforge-space-8);
+}
+
+/* numbered pagination */
+.nexusforge-pagination { margin-top: var(--nexusforge-space-8); }
+.nexusforge-pagination .nav-links { display: flex; gap: var(--nexusforge-space-2); justify-content: center; flex-wrap: wrap; }
+.nexusforge-pagination .page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0 0.6rem;
+	border: 1px solid var(--nexusforge-color-border);
+	border-radius: var(--nexusforge-radius-md);
+	color: var(--nexusforge-color-text-2);
+	text-decoration: none;
+	font-weight: 600;
+}
+.nexusforge-pagination .page-numbers.current { background: var(--nexusforge-color-brand); color: var(--nexusforge-white); border-color: transparent; }
+.nexusforge-pagination .page-numbers:hover:not(.current) { background: var(--nexusforge-mint-pale); }
+
+/* 404 */
+.nexusforge-404 { text-align: center; padding-block: var(--nexusforge-section-y); }
+.nexusforge-404__code { font-size: clamp(4rem, 2rem + 10vw, 6rem); font-weight: 800; color: var(--nexusforge-color-brand); line-height: 1; letter-spacing: -0.04em; }
+.nexusforge-404__actions { display: flex; gap: var(--nexusforge-space-3); justify-content: center; flex-wrap: wrap; margin-top: var(--nexusforge-space-5); }
+
+/* empty state */
+.nexusforge-empty {
+	padding: var(--nexusforge-space-6);
+	border: 1px dashed var(--nexusforge-color-border);
+	border-radius: var(--nexusforge-radius-lg);
+	text-align: center;
+	background: var(--nexusforge-color-canvas);
+}
+
+/* ============================================================= COMMENTS */
+.comment-list { list-style: none; padding: 0; }
+.comment-body { padding: var(--nexusforge-space-5) 0; border-bottom: 1px solid var(--nexusforge-color-border); }
+.comment-respond { margin-top: var(--nexusforge-space-6); }
+
+/* ============================================================= FOOTER */
+.nexusforge-footer {
+	background: var(--nexusforge-ink);
+	color: #c7d3cd;
+	padding-block: var(--nexusforge-space-10) var(--nexusforge-space-6);
+}
+
+.nexusforge-footer a { color: #c7d3cd; text-decoration: none; }
+.nexusforge-footer a:hover { color: var(--nexusforge-white); }
+
+.nexusforge-footer__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: var(--nexusforge-space-8);
+}
+
+.nexusforge-footer__brand .nexusforge-branding { color: var(--nexusforge-white); }
+.nexusforge-footer__brand .nexusforge-branding a { color: var(--nexusforge-white); }
+.nexusforge-footer__brand .nexusforge-dot { color: var(--nexusforge-coral); }
+
+.nexusforge-footer .widget-title,
+.nexusforge-footer__col-title {
+	font-size: 0.8125rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--nexusforge-color-footer-muted);
+	margin-bottom: var(--nexusforge-space-4);
+}
+
+.nexusforge-footer__bottom {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--nexusforge-space-3);
+	justify-content: space-between;
+	margin-top: var(--nexusforge-space-8);
+	padding-top: var(--nexusforge-space-5);
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	font-size: var(--nexusforge-fs-small);
+	color: var(--nexusforge-color-footer-muted);
+}
+
+/* ============================================================= RESPONSIVE */
+@media (max-width: 900px) {
+	.nexusforge-menu-toggle { display: flex; }
+
+	.nexusforge-primary-nav {
+		position: fixed;
+		inset: 0 0 0 auto;
+		width: min(86vw, 360px);
+		flex-direction: column;
+		align-items: stretch;
+		padding: 5rem var(--nexusforge-space-5) var(--nexusforge-space-5);
+		background: var(--nexusforge-color-surface);
+		border-left: 1px solid var(--nexusforge-color-border);
+		box-shadow: var(--nexusforge-shadow-lg);
+		transform: translateX(100%);
+		transition: transform 0.28s ease;
+		z-index: var(--nexusforge-z-drawer);
+		overflow-y: auto;
+	}
+
+	.nexusforge-primary-nav.is-open { transform: translateX(0); }
+
+	.nexusforge-menu { flex-direction: column; gap: 0; }
+	.nexusforge-menu > li { border-bottom: 1px solid var(--nexusforge-color-border); }
+	.nexusforge-menu a { padding: 0.85rem 0; }
+
+	.nexusforge-sub-menu {
+		position: static;
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+		box-shadow: none;
+		border: none;
+		padding-left: var(--nexusforge-space-4);
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.25s ease;
+	}
+
+	.nexusforge-menu li.is-open > .nexusforge-sub-menu { max-height: 60vh; }
+
+	.nexusforge-submenu-toggle { position: absolute; right: 0; top: 0.5rem; }
+
+	.nexusforge-nav-backdrop {
+		position: fixed;
+		inset: 0;
+		background: rgba(36, 58, 52, 0.35);
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.25s ease, visibility 0.25s;
+		z-index: calc(var(--nexusforge-z-drawer) - 1);
+	}
+
+	.nexusforge-nav-backdrop.is-visible { opacity: 1; visibility: visible; }
+
+	body.nexusforge-nav-open { overflow: hidden; }
+}
+
+@media (max-width: 600px) {
+	.nexusforge-hero__orb { display: none; }
+	.nexusforge-hero__actions .nexusforge-btn { width: 100%; }
+	.nexusforge-header__actions .nexusforge-btn,
+	.nexusforge-header__actions .nexusforge-signin { display: none; }
+}
+
+/* ============================================================= MOTION */
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+	}
+}
+
+/* ============================================================= WP CORE CONTENT */
+/* Alignment classes WordPress applies to images, captions and galleries. */
+.alignleft {
+	float: left;
+	margin: 0 var(--nexusforge-space-5) var(--nexusforge-space-4) 0;
+}
+
+.alignright {
+	float: right;
+	margin: 0 0 var(--nexusforge-space-4) var(--nexusforge-space-5);
+}
+
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wp-caption {
+	max-width: 100%;
+	margin-bottom: var(--nexusforge-space-5);
+}
+
+.wp-caption img {
+	border-radius: var(--nexusforge-radius-md);
+}
+
+.wp-caption-text,
+.gallery-caption {
+	margin-top: var(--nexusforge-space-2);
+	font-size: var(--nexusforge-fs-small);
+	color: var(--nexusforge-color-text-2);
+	text-align: center;
+}
+
+/* Sticky posts and comment-author highlight. */
+.sticky { position: relative; }
+
+.sticky .entry::before {
+	content: "";
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: var(--nexusforge-color-brand);
+	margin-right: var(--nexusforge-space-2);
+	vertical-align: middle;
+}
+
+.bypostauthor > .comment-body {
+	border-left: 3px solid var(--nexusforge-color-brand);
+	padding-left: var(--nexusforge-space-4);
+}
+
+/* Block alignment support. */
+.alignwide { max-width: var(--nexusforge-wide); }
+
+.alignfull {
+	max-width: 100vw;
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
+}
+
+/* WordPress accessibility helper (focusable variant). */
+.screen-reader-text:focus {
+	position: fixed;
+	top: var(--nexusforge-space-2);
+	left: var(--nexusforge-space-2);
+	z-index: var(--nexusforge-z-skip);
+	width: auto;
+	height: auto;
+	clip-path: none;
+	padding: var(--nexusforge-space-2) var(--nexusforge-space-4);
+	background: var(--nexusforge-color-surface);
+	border-radius: var(--nexusforge-radius-sm);
+}
+
+/* ============================================================= ELEMENTOR */
+/* Do not force widths/overrides on Elementor sections; just ensure the theme
+ * container does not clip full-width Elementor content. */
+.elementor-section-wrap > .elementor-section,
+.elementor > .elementor-element { max-width: none; }

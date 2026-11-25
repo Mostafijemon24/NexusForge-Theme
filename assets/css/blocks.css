@@ -1,0 +1,62 @@
+/**
+ * NexusForge — custom block styles + custom-header banner.
+ * Loaded on the front end (inc/enqueue.php) and in the editor (inc/blocks.php).
+ * Uses theme design tokens with safe fallbacks so styles render everywhere.
+ */
+
+/* Button — Outline */
+.wp-block-button.is-style-nexusforge-outline > .wp-block-button__link {
+	background-color: transparent;
+	color: var(--nexusforge-color-brand, #287c70);
+	border: 2px solid var(--nexusforge-color-brand, #287c70);
+}
+.wp-block-button.is-style-nexusforge-outline > .wp-block-button__link:hover,
+.wp-block-button.is-style-nexusforge-outline > .wp-block-button__link:focus {
+	background-color: var(--nexusforge-color-brand, #287c70);
+	color: var(--nexusforge-color-surface, #ffffff);
+}
+
+/* Button — Pill */
+.wp-block-button.is-style-nexusforge-pill > .wp-block-button__link {
+	border-radius: var(--nexusforge-radius-pill, 999px);
+}
+
+/* Group — Card */
+.wp-block-group.is-style-nexusforge-card {
+	background-color: var(--nexusforge-color-surface, #ffffff);
+	border: 1px solid var(--nexusforge-color-border, #e3e8e1);
+	border-radius: var(--nexusforge-radius-lg, 16px);
+	box-shadow: var(--nexusforge-shadow-md, 0 8px 24px rgba(36, 58, 52, .08));
+	padding: var(--nexusforge-space-5, 2rem);
+}
+
+/* Image — Framed */
+.wp-block-image.is-style-nexusforge-frame img {
+	border: 1px solid var(--nexusforge-color-border, #e3e8e1);
+	border-radius: var(--nexusforge-radius-md, 10px);
+	box-shadow: var(--nexusforge-shadow-sm, 0 1px 2px rgba(36, 58, 52, .06));
+}
+
+/* Quote — Panel */
+.wp-block-quote.is-style-nexusforge-panel {
+	background-color: var(--nexusforge-mint-pale, #eef7f3);
+	border-left: 4px solid var(--nexusforge-color-brand, #287c70);
+	border-radius: var(--nexusforge-radius-md, 10px);
+	padding: var(--nexusforge-space-5, 2rem);
+	margin-left: 0;
+}
+.wp-block-quote.is-style-nexusforge-panel cite {
+	color: var(--nexusforge-color-text-2, #50645b);
+}
+
+/* Custom Header banner (WordPress custom-header support) */
+.nexusforge-custom-header {
+	width: 100%;
+	line-height: 0;
+}
+.nexusforge-custom-header__img {
+	display: block;
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+}

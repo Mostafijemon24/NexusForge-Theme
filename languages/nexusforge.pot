@@ -1,0 +1,14 @@
+# Copyright (C) 2026 NexusForge
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: NexusForge 1.0.3\n"
+"Report-Msgid-Bugs-To: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: \n"
+"X-Domain: nexusforge\n"
+
+# Translators: regenerate this catalog with `wp i18n make-pot . languages/nexusforge.pot`
+# after string changes. This stub exists so the theme is translation-ready on day one.
