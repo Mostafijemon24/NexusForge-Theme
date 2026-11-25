@@ -231,18 +231,12 @@ git clone https://github.com/Mostafijemon24/NexusForge-Theme.git nexusforge
 
 To publish a release:
 
-1. Update the version in `style.css`, `functions.php` (`NEXUSFORGE_VERSION`) and `readme.txt` (`Stable tag` and a changelog entry).
-2. Commit, then tag the commit with the same version and push the tag:
+1. Update the version in `style.css`, `functions.php` (`NEXUSFORGE_VERSION`) and `readme.txt` (`Stable tag` and a changelog entry), then commit and push to `main`.
+2. On GitHub open **Actions → Release → Run workflow**.
 
-```bash
-git tag v1.0.5
-```
+The [release workflow](.github/workflows/release.yml) reads the version from `style.css`, builds `nexusforge-<version>.zip` with `git archive`, creates the matching `v<version>` tag and publishes a release with the ZIP and the PDF guide attached. The release notes are taken from that version's entry in `readme.txt`. It stops if that version has already been released.
 
-```bash
-git push origin v1.0.5
-```
-
-The [release workflow](.github/workflows/release.yml) checks that the tag matches `style.css`, builds `nexusforge-<version>.zip` with `git archive`, and publishes a release with the ZIP and the PDF guide attached. The release notes are taken from that version's entry in `readme.txt`.
+Pushing a `v<version>` tag by hand starts the same workflow.
 
 To build the same ZIP by hand:
 

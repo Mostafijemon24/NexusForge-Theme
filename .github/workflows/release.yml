@@ -1,8 +1,14 @@
 name: Release
 
-# Pushing a tag such as v1.0.4 builds the installable theme ZIP and publishes
-# a GitHub release with the ZIP and the PDF user guide attached.
+# Builds the installable theme ZIP and publishes a GitHub release with the ZIP
+# and the PDF user guide attached.
+#
+# Two ways to start it:
+#   1. Actions tab -> Release -> "Run workflow". The version is read from
+#      style.css and the release tag (for example v1.0.4) is created for you.
+#   2. Push a tag such as v1.0.4 yourself. It must match the style.css version.
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*'
@@ -15,18 +21,31 @@ jobs:
     name: Build ZIP and publish release
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the tagged commit
+      - name: Check out the code
         uses: actions/checkout@v4
 
-      - name: Check the tag matches the theme version
+      - name: Read the theme version
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
-          STYLE_VERSION="$(sed -n 's/^Version:[[:space:]]*//p' style.css | head -n 1 | tr -d '\r')"
-          if [ "$VERSION" != "$STYLE_VERSION" ]; then
-            echo "Tag $GITHUB_REF_NAME does not match style.css version $STYLE_VERSION" >&2
+          VERSION="$(sed -n 's/^Version:[[:space:]]*//p' style.css | head -n 1 | tr -d '\r')"
+          if [ -z "$VERSION" ]; then
+            echo "Could not read a Version header from style.css" >&2
+            exit 1
+          fi
+          if [ "$GITHUB_REF_TYPE" = "tag" ] && [ "$GITHUB_REF_NAME" != "v$VERSION" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match style.css version $VERSION" >&2
             exit 1
           fi
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "TAG=v$VERSION" >> "$GITHUB_ENV"
+
+      - name: Stop if this version is already released
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            echo "Release $TAG already exists. Bump the version in style.css, functions.php and readme.txt first." >&2
+            exit 1
+          fi
 
       - name: Build the theme ZIP
         run: |
@@ -50,8 +69,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" \
+          gh release create "$TAG" \
             "nexusforge-${VERSION}.zip" \
             ".github/assets/NexusForge-Documentation.pdf" \
+            --target "$GITHUB_SHA" \
             --title "NexusForge ${VERSION}" \
             --notes-file release-notes.md
