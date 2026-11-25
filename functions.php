@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! defined( 'NEXUSFORGE_VERSION' ) ) {
 	// Keep in sync with the Version header in style.css.
-	define( 'NEXUSFORGE_VERSION', '1.0.3' );
+	define( 'NEXUSFORGE_VERSION', '1.0.4' );
 }
 
 define( 'NEXUSFORGE_DIR', get_template_directory() );

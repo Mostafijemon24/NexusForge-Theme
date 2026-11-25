@@ -14,18 +14,16 @@ get_header();
 <main id="primary" class="nexusforge-main">
 	<div class="nexusforge-container nexusforge-container--narrow">
 		<header class="nexusforge-search-header">
+			<h1 class="page-title">
+				<?php
+				printf(
+					/* translators: %s: search query. */
+					esc_html__( 'Search results for "%s"', 'nexusforge' ),
+					'<span>' . esc_html( get_search_query() ) . '</span>'
+				);
+				?>
+			</h1>
 			<?php get_search_form(); ?>
-			<?php if ( have_posts() ) : ?>
-				<p class="nexusforge-search-count">
-					<?php
-					printf(
-						/* translators: %s: search query. */
-						esc_html__( 'Results for "%s"', 'nexusforge' ),
-						'<strong>' . esc_html( get_search_query() ) . '</strong>'
-					);
-					?>
-				</p>
-			<?php endif; ?>
 		</header>
 
 		<?php if ( have_posts() ) : ?>

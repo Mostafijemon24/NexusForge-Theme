@@ -29,16 +29,49 @@ function nexusforge_customizer_defaults() {
 }
 
 /**
+ * Allowed integer range for each numeric setting.
+ *
+ * Shared by the Customizer controls (input attributes), the sanitize callback
+ * (before saving to the database) and the CSS compiler (before output).
+ *
+ * @return array
+ */
+function nexusforge_customizer_ranges() {
+	return array(
+		'nexusforge_base_font_px'  => array(
+			'min'  => 14,
+			'max'  => 22,
+			'step' => 1,
+		),
+		'nexusforge_content_width' => array(
+			'min'  => 960,
+			'max'  => 1440,
+			'step' => 20,
+		),
+		'nexusforge_button_radius' => array(
+			'min'  => 0,
+			'max'  => 40,
+			'step' => 1,
+		),
+	);
+}
+
+/**
  * Register Customizer sections, settings and controls.
  *
  * @param WP_Customize_Manager $wp_customize Customizer manager.
  */
 function nexusforge_customize_register( $wp_customize ) {
 	$defaults = nexusforge_customizer_defaults();
+	$ranges   = nexusforge_customizer_ranges();
 
 	// Live preview for core identity.
-	$wp_customize->get_setting( 'blogname' )->transport        = 'postMessage';
-	$wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
+	foreach ( array( 'blogname', 'blogdescription' ) as $nexusforge_core_setting ) {
+		$nexusforge_setting = $wp_customize->get_setting( $nexusforge_core_setting );
+		if ( $nexusforge_setting ) {
+			$nexusforge_setting->transport = 'postMessage';
+		}
+	}
 
 	// --- Design System panel ---------------------------------------------
 	$wp_customize->add_section(
@@ -125,11 +158,7 @@ function nexusforge_customize_register( $wp_customize ) {
 			'label'       => __( 'Base font size (px)', 'nexusforge' ),
 			'section'     => 'nexusforge_design',
 			'type'        => 'number',
-			'input_attrs' => array(
-				'min'  => 14,
-				'max'  => 22,
-				'step' => 1,
-			),
+			'input_attrs' => $ranges['nexusforge_base_font_px'],
 		)
 	);
 
@@ -148,11 +177,7 @@ function nexusforge_customize_register( $wp_customize ) {
 			'label'       => __( 'Wide content width (px)', 'nexusforge' ),
 			'section'     => 'nexusforge_design',
 			'type'        => 'number',
-			'input_attrs' => array(
-				'min'  => 960,
-				'max'  => 1440,
-				'step' => 20,
-			),
+			'input_attrs' => $ranges['nexusforge_content_width'],
 		)
 	);
 
@@ -171,33 +196,39 @@ function nexusforge_customize_register( $wp_customize ) {
 			'label'       => __( 'Button corner radius (px)', 'nexusforge' ),
 			'section'     => 'nexusforge_design',
 			'type'        => 'number',
-			'input_attrs' => array(
-				'min'  => 0,
-				'max'  => 40,
-				'step' => 1,
-			),
+			'input_attrs' => $ranges['nexusforge_button_radius'],
 		)
 	);
 }
 add_action( 'customize_register', 'nexusforge_customize_register' );
 
 /**
- * Sanitize an integer, clamped to the control's declared min/max when provided.
+ * Sanitize a numeric Customizer value before it is saved to the database.
  *
- * @param mixed                $value   Raw value.
+ * The value is validated as a number, cast to an integer and clamped to the
+ * range declared for the setting in nexusforge_customizer_ranges(). Anything
+ * that is not numeric falls back to the setting's default.
+ *
+ * @param mixed                $value   Raw, untrusted value.
  * @param WP_Customize_Setting $setting Setting instance.
  * @return int
  */
 function nexusforge_sanitize_int_range( $value, $setting = null ) {
+	$id       = ( $setting instanceof WP_Customize_Setting ) ? $setting->id : '';
+	$defaults = nexusforge_customizer_defaults();
+	$ranges   = nexusforge_customizer_ranges();
+	$default  = isset( $defaults[ $id ] ) ? (int) $defaults[ $id ] : 0;
+
+	if ( ! is_numeric( $value ) ) {
+		return $default;
+	}
+
 	$value = (int) $value;
 
-	if ( $setting instanceof WP_Customize_Setting ) {
-		$control = $setting->manager->get_control( $setting->id );
-		if ( $control && isset( $control->input_attrs['min'], $control->input_attrs['max'] ) ) {
-			$min   = (int) $control->input_attrs['min'];
-			$max   = (int) $control->input_attrs['max'];
-			$value = max( $min, min( $max, $value ) );
-		}
+	if ( isset( $ranges[ $id ] ) ) {
+		$value = max( $ranges[ $id ]['min'], min( $ranges[ $id ]['max'], $value ) );
+	} else {
+		$value = absint( $value );
 	}
 
 	return $value;

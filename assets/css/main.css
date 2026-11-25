@@ -58,7 +58,8 @@ a {
 	text-decoration-color: var(--nexusforge-color-border);
 }
 
-a:hover { color: var(--nexusforge-color-brand); }
+a:hover,
+a:focus-visible { color: var(--nexusforge-color-brand); }
 
 ul, ol { padding-left: 1.25rem; }
 
@@ -75,10 +76,20 @@ code, pre {
 	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* Visible keyboard focus indicator for every interactive element. The theme
+   never removes outlines; components below only adjust colour/offset. */
 :focus-visible {
 	outline: var(--nexusforge-focus-ring);
 	outline-offset: var(--nexusforge-focus-offset);
-	border-radius: var(--nexusforge-radius-sm);
+}
+
+/* Dark surfaces need a light ring to stay visible. */
+.nexusforge-footer :focus-visible,
+.nexusforge-band--brand :focus-visible,
+.has-ink-background-color :focus-visible,
+.has-brand-background-color :focus-visible,
+.has-brand-deep-background-color :focus-visible {
+	outline-color: var(--nexusforge-color-focus-inverse);
 }
 
 ::selection {
@@ -102,31 +113,62 @@ code, pre {
 	padding-block: var(--nexusforge-section-y);
 }
 
+/* Text meant only for screen readers. */
 .screen-reader-text {
 	position: absolute !important;
-	clip-path: inset(50%);
 	width: 1px;
 	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
 	overflow: hidden;
+	clip-path: inset(50%);
 	white-space: nowrap;
+	word-wrap: normal !important;
 }
 
-.skip-link {
-	position: absolute;
-	left: var(--nexusforge-space-2);
-	top: -60px;
-	z-index: var(--nexusforge-z-skip);
-	padding: var(--nexusforge-space-2) var(--nexusforge-space-4);
-	background: var(--nexusforge-color-brand);
-	color: var(--nexusforge-white);
-	border-radius: var(--nexusforge-radius-sm);
-	font-weight: 700;
-	transition: top 0.2s ease;
-}
-
-.skip-link:focus {
+/* Focusable screen-reader text (e.g. core "skip" links) becomes visible. */
+.screen-reader-text:focus {
 	top: var(--nexusforge-space-2);
+	left: var(--nexusforge-space-2);
+	z-index: var(--nexusforge-z-skip);
+	display: block;
+	width: auto;
+	height: auto;
+	margin: 0;
+	padding: var(--nexusforge-space-3) var(--nexusforge-space-5);
+	overflow: visible;
+	clip-path: none;
+	white-space: normal;
+	background: var(--nexusforge-color-surface);
+	color: var(--nexusforge-color-text);
+	border-radius: var(--nexusforge-radius-sm);
+	box-shadow: var(--nexusforge-shadow-md);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+/* Skip link: hidden until it receives keyboard focus, then pinned to the top
+   left of the viewport — below the WordPress admin bar when that is showing. */
+.skip-link:focus {
+	position: fixed !important;
+	top: var(--nexusforge-space-2);
+	left: var(--nexusforge-space-2);
+	background: var(--nexusforge-color-brand-2);
 	color: var(--nexusforge-white);
+	outline: 3px solid var(--nexusforge-white);
+	outline-offset: -6px;
+}
+
+/* Admin bar is 32px tall on desktop and 46px at <= 782px. */
+.admin-bar .skip-link:focus {
+	top: calc(32px + var(--nexusforge-space-2));
+}
+
+@media screen and (max-width: 782px) {
+	.admin-bar .skip-link:focus {
+		top: calc(46px + var(--nexusforge-space-2));
+	}
 }
 
 .nexusforge-eyebrow {
@@ -170,6 +212,30 @@ code, pre {
 	color: var(--nexusforge-white);
 }
 
+/* Native submit buttons (comment form, password form, widgets) share the
+   primary button look, target size and hover/focus states. */
+input[type="submit"] {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 0.75rem 1.4rem;
+	border: 1.5px solid transparent;
+	border-radius: var(--nexusforge-radius-md);
+	background: var(--nexusforge-color-brand);
+	color: var(--nexusforge-white);
+	font: inherit;
+	font-weight: 700;
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background-color 0.18s ease;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus-visible {
+	background: var(--nexusforge-color-brand-2);
+}
+
 .nexusforge-btn--secondary {
 	background: transparent;
 	color: var(--nexusforge-color-brand-2);
@@ -189,6 +255,12 @@ code, pre {
 	text-decoration-color: var(--nexusforge-color-border);
 	min-height: auto;
 	padding-inline: 0.25rem;
+}
+
+.nexusforge-btn--ghost:hover,
+.nexusforge-btn--ghost:focus-visible {
+	color: var(--nexusforge-color-brand-2);
+	text-decoration-color: currentColor;
 }
 
 .nexusforge-btn[disabled],
@@ -222,12 +294,13 @@ select {
 	border-radius: var(--nexusforge-radius-md);
 }
 
+/* Form fields keep a real outline on focus (never `outline: none`). */
 input:focus,
 textarea:focus,
 select:focus {
-	outline: none;
-	border-color: var(--nexusforge-color-brand);
-	box-shadow: 0 0 0 4px var(--nexusforge-mint);
+	outline: var(--nexusforge-focus-ring);
+	outline-offset: 2px;
+	border-color: var(--nexusforge-color-brand-2);
 }
 
 .nexusforge-form-notice {
@@ -247,6 +320,8 @@ select:focus {
 }
 
 .search-form .search-field { flex: 1 1 220px; }
+
+.nexusforge-search-header { margin-bottom: var(--nexusforge-space-8); }
 
 /* ============================================================= BADGES/TAGS */
 .nexusforge-tag {
@@ -334,8 +409,7 @@ select:focus {
 
 .nexusforge-menu li { position: relative; }
 
-.nexusforge-menu a,
-.nexusforge-menu-link {
+.nexusforge-menu a {
 	display: inline-block;
 	padding: 0.4rem 0;
 	font-weight: 500;
@@ -344,7 +418,8 @@ select:focus {
 }
 
 .nexusforge-menu .current-menu-item > a,
-.nexusforge-menu a:hover {
+.nexusforge-menu a:hover,
+.nexusforge-menu a:focus-visible {
 	color: var(--nexusforge-color-brand-2);
 	font-weight: 600;
 }
@@ -366,35 +441,68 @@ select:focus {
 	opacity: 0;
 	visibility: hidden;
 	transform: translateY(6px);
-	transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+	transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
 }
 
+/* Nested dropdowns fly out to the side. */
+.nexusforge-sub-menu .nexusforge-sub-menu {
+	top: calc(-1 * var(--nexusforge-space-2));
+	left: 100%;
+}
+
+/* Open on hover, on keyboard focus anywhere inside the item, or via the toggle button. */
 .nexusforge-menu li:hover > .nexusforge-sub-menu,
 .nexusforge-menu li:focus-within > .nexusforge-sub-menu,
 .nexusforge-menu li.is-open > .nexusforge-sub-menu {
 	opacity: 1;
 	visibility: visible;
 	transform: translateY(0);
+	/* No delay when opening, so submenu links are focusable immediately. */
+	transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s;
 }
 
-.nexusforge-sub-menu a { padding: 0.5rem 0.6rem; border-radius: var(--nexusforge-radius-sm); width: 100%; }
+/* Dismissed with Escape: stay closed until the pointer/focus leaves the item. */
+.nexusforge-menu li.is-dismissed > .nexusforge-sub-menu {
+	opacity: 0;
+	visibility: hidden;
+}
 
-.nexusforge-sub-menu a:hover { background: var(--nexusforge-mint-pale); }
+.nexusforge-sub-menu li {
+	display: flex;
+	align-items: center;
+}
+
+.nexusforge-sub-menu a {
+	flex: 1 1 auto;
+	padding: 0.5rem 0.6rem;
+	border-radius: var(--nexusforge-radius-sm);
+}
+
+.nexusforge-sub-menu a:hover,
+.nexusforge-sub-menu a:focus-visible { background: var(--nexusforge-mint-pale); }
+
+.nexusforge-sub-menu a:focus-visible { outline-offset: -3px; }
 
 /* submenu toggle button (keyboard) */
 .nexusforge-submenu-toggle {
 	display: inline-flex;
+	flex: 0 0 auto;
 	align-items: center;
 	justify-content: center;
 	width: 32px;
 	height: 32px;
 	margin-left: 0.15rem;
 	padding: 0;
+	color: var(--nexusforge-color-text);
 	background: transparent;
 	border: none;
+	border-radius: var(--nexusforge-radius-sm);
 	cursor: pointer;
 	vertical-align: middle;
 }
+
+.nexusforge-submenu-toggle:hover,
+.nexusforge-submenu-toggle:focus-visible { background: var(--nexusforge-mint-pale); }
 
 .nexusforge-submenu-toggle__icon {
 	width: 9px;
@@ -403,10 +511,13 @@ select:focus {
 	border-bottom: 2px solid currentColor;
 	transform: rotate(45deg);
 	transition: transform 0.2s ease;
-	color: var(--nexusforge-color-text-2);
 }
 
 .nexusforge-submenu-toggle[aria-expanded="true"] .nexusforge-submenu-toggle__icon { transform: rotate(-135deg); }
+
+/* Nested (fly-out) toggles point sideways, towards the fly-out. */
+.nexusforge-sub-menu .nexusforge-submenu-toggle__icon,
+.nexusforge-sub-menu .nexusforge-submenu-toggle[aria-expanded="true"] .nexusforge-submenu-toggle__icon { transform: rotate(-45deg); }
 
 /* header actions */
 .nexusforge-header__actions {
@@ -414,6 +525,9 @@ select:focus {
 	align-items: center;
 	gap: var(--nexusforge-space-4);
 }
+
+.nexusforge-signin:hover,
+.nexusforge-signin:focus-visible { text-decoration-color: currentColor; }
 
 /* menu toggle (hamburger) */
 .nexusforge-menu-toggle {
@@ -426,8 +540,12 @@ select:focus {
 	padding: 0;
 	background: transparent;
 	border: none;
+	border-radius: var(--nexusforge-radius-sm);
 	cursor: pointer;
 }
+
+.nexusforge-menu-toggle:hover,
+.nexusforge-menu-toggle:focus-visible { background: var(--nexusforge-mint-pale); }
 
 .nexusforge-menu-toggle span {
 	display: block;
@@ -436,12 +554,11 @@ select:focus {
 	margin-inline: auto;
 	background: var(--nexusforge-color-text);
 	border-radius: 2px;
-	transition: transform 0.25s ease, opacity 0.2s ease;
 }
 
-.nexusforge-menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nexusforge-menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.nexusforge-menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+/* mobile menu close button + backdrop (shown only in the mobile drawer) */
+.nexusforge-menu-close,
+.nexusforge-nav-backdrop { display: none; }
 
 /* ============================================================= HERO */
 .nexusforge-hero {
@@ -514,7 +631,8 @@ select:focus {
 	border-bottom: 1px solid var(--nexusforge-color-border);
 }
 
-.nexusforge-trust__logos { display: flex; flex-wrap: wrap; gap: clamp(1rem, 0.5rem + 2vw, 2.8rem); color: #9aa8a1; font-weight: 700; }
+/* Secondary text colour: 6.4:1 on white (the previous #9aa8a1 was 2.5:1, below WCAG AA). */
+.nexusforge-trust__logos { display: flex; flex-wrap: wrap; gap: clamp(1rem, 0.5rem + 2vw, 2.8rem); color: var(--nexusforge-color-text-2); font-weight: 700; }
 
 /* section head */
 .nexusforge-section__head { max-width: 640px; }
@@ -530,7 +648,8 @@ select:focus {
 .nexusforge-steps { display: flex; flex-direction: column; }
 .nexusforge-step { display: flex; gap: var(--nexusforge-space-5); padding-block: var(--nexusforge-space-5); border-bottom: 1px solid var(--nexusforge-color-border); }
 .nexusforge-step:last-child { border-bottom: none; }
-.nexusforge-step__num { font-weight: 800; color: var(--nexusforge-color-brand); flex-shrink: 0; width: 2.2ch; }
+/* Deep teal: brand teal is only 4.45:1 on the mint-pale band (below WCAG AA). */
+.nexusforge-step__num { font-weight: 800; color: var(--nexusforge-color-brand-2); flex-shrink: 0; width: 2.2ch; }
 
 /* testimonial */
 .nexusforge-quote { max-width: 820px; margin-inline: auto; text-align: center; }
@@ -549,7 +668,8 @@ select:focus {
 
 .entry-title { margin-bottom: var(--nexusforge-space-3); }
 .entry-title a { color: inherit; text-decoration: none; }
-.entry-title a:hover { color: var(--nexusforge-color-brand-2); }
+.entry-title a:hover,
+.entry-title a:focus-visible { color: var(--nexusforge-color-brand-2); }
 
 .entry-meta {
 	display: flex;
@@ -589,7 +709,8 @@ select:focus {
 	font-weight: 600;
 }
 .nexusforge-pagination .page-numbers.current { background: var(--nexusforge-color-brand); color: var(--nexusforge-white); border-color: transparent; }
-.nexusforge-pagination .page-numbers:hover:not(.current) { background: var(--nexusforge-mint-pale); }
+.nexusforge-pagination .page-numbers:hover:not(.current),
+.nexusforge-pagination .page-numbers:focus-visible:not(.current) { background: var(--nexusforge-mint-pale); }
 
 /* 404 */
 .nexusforge-404 { text-align: center; padding-block: var(--nexusforge-section-y); }
@@ -618,7 +739,8 @@ select:focus {
 }
 
 .nexusforge-footer a { color: #c7d3cd; text-decoration: none; }
-.nexusforge-footer a:hover { color: var(--nexusforge-white); }
+.nexusforge-footer a:hover,
+.nexusforge-footer a:focus-visible { color: var(--nexusforge-white); text-decoration: underline; }
 
 .nexusforge-footer__grid {
 	display: grid;
@@ -654,60 +776,170 @@ select:focus {
 
 /* ============================================================= RESPONSIVE */
 @media (max-width: 900px) {
-	.nexusforge-menu-toggle { display: flex; }
+	.nexusforge-header__actions { margin-left: auto; }
 
+	.nexusforge-menu-toggle {
+		display: flex;
+		order: 3;
+		flex: 0 0 auto;
+	}
+
+	/* --- Mobile menu: a modal drawer. Hidden (and unfocusable) until opened. */
 	.nexusforge-primary-nav {
 		position: fixed;
-		inset: 0 0 0 auto;
+		top: 0;
+		right: 0;
+		bottom: 0;
 		width: min(86vw, 360px);
 		flex-direction: column;
 		align-items: stretch;
-		padding: 5rem var(--nexusforge-space-5) var(--nexusforge-space-5);
+		padding: var(--nexusforge-space-4) var(--nexusforge-space-5) var(--nexusforge-space-5);
 		background: var(--nexusforge-color-surface);
 		border-left: 1px solid var(--nexusforge-color-border);
-		box-shadow: var(--nexusforge-shadow-lg);
+		box-shadow: -12px 0 40px -20px rgba(0, 0, 0, 0.45);
 		transform: translateX(100%);
-		transition: transform 0.28s ease;
+		visibility: hidden;
+		transition: transform 0.28s ease, visibility 0s linear 0.28s;
 		z-index: var(--nexusforge-z-drawer);
 		overflow-y: auto;
+		overscroll-behavior: contain;
 	}
 
-	.nexusforge-primary-nav.is-open { transform: translateX(0); }
+	.nexusforge-primary-nav.is-open {
+		transform: translateX(0);
+		visibility: visible;
+		transition: transform 0.28s ease, visibility 0s;
+	}
+
+	/* Keep the drawer (and its Close button) clear of the WordPress admin bar. */
+	.admin-bar .nexusforge-primary-nav { top: 32px; }
+
+	/* Close button: always visible at the top of the open drawer. */
+	.nexusforge-menu-close {
+		display: inline-flex;
+		flex: 0 0 auto;
+		align-self: flex-end;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		margin-bottom: var(--nexusforge-space-3);
+		padding: 0;
+		color: var(--nexusforge-color-text);
+		background: var(--nexusforge-color-surface);
+		border: 2px solid var(--nexusforge-color-text);
+		border-radius: var(--nexusforge-radius-md);
+		cursor: pointer;
+	}
+
+	.nexusforge-menu-close:hover,
+	.nexusforge-menu-close:focus-visible {
+		color: var(--nexusforge-color-surface);
+		background: var(--nexusforge-color-text);
+	}
+
+	.nexusforge-menu-close__icon {
+		position: relative;
+		display: block;
+		width: 18px;
+		height: 18px;
+	}
+
+	.nexusforge-menu-close__icon::before,
+	.nexusforge-menu-close__icon::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		margin-top: -1px;
+		background: currentColor;
+		border-radius: 2px;
+	}
+
+	.nexusforge-menu-close__icon::before { transform: rotate(45deg); }
+	.nexusforge-menu-close__icon::after { transform: rotate(-45deg); }
 
 	.nexusforge-menu { flex-direction: column; gap: 0; }
-	.nexusforge-menu > li { border-bottom: 1px solid var(--nexusforge-color-border); }
-	.nexusforge-menu a { padding: 0.85rem 0; }
+	.nexusforge-menu li { border-bottom: 1px solid var(--nexusforge-color-border); }
+	.nexusforge-menu li:last-child { border-bottom: none; }
+	.nexusforge-menu > li:last-child { border-bottom: 1px solid var(--nexusforge-color-border); }
 
-	.nexusforge-sub-menu {
+	.nexusforge-menu a {
+		display: block;
+		padding: 0.85rem 0;
+	}
+
+	.nexusforge-menu li.menu-item-has-children > a { margin-right: 52px; }
+
+	/* Submenus are an accordion in the drawer: only rendered when expanded,
+	   so collapsed links can never receive keyboard focus. */
+	.nexusforge-sub-menu,
+	.nexusforge-sub-menu .nexusforge-sub-menu,
+	.nexusforge-menu li:hover > .nexusforge-sub-menu,
+	.nexusforge-menu li:focus-within > .nexusforge-sub-menu {
+		display: none;
 		position: static;
+		min-width: 0;
+		padding: 0 0 0 var(--nexusforge-space-4);
 		opacity: 1;
 		visibility: visible;
 		transform: none;
-		box-shadow: none;
+		transition: none;
+		background: transparent;
 		border: none;
-		padding-left: var(--nexusforge-space-4);
-		max-height: 0;
-		overflow: hidden;
-		transition: max-height 0.25s ease;
+		border-top: 1px solid var(--nexusforge-color-border);
+		border-radius: 0;
+		box-shadow: none;
 	}
 
-	.nexusforge-menu li.is-open > .nexusforge-sub-menu { max-height: 60vh; }
+	.nexusforge-menu li.is-open > .nexusforge-sub-menu { display: block; }
 
-	.nexusforge-submenu-toggle { position: absolute; right: 0; top: 0.5rem; }
+	.nexusforge-sub-menu li { display: block; }
+	.nexusforge-sub-menu a { padding: 0.85rem 0; border-radius: 0; }
 
+	.nexusforge-sub-menu a:hover,
+	.nexusforge-sub-menu a:focus-visible { background: transparent; }
+
+	.nexusforge-sub-menu a:focus-visible { outline-offset: var(--nexusforge-focus-offset); }
+
+	/* In the accordion every toggle points down / up. */
+	.nexusforge-sub-menu .nexusforge-submenu-toggle__icon { transform: rotate(45deg); }
+	.nexusforge-sub-menu .nexusforge-submenu-toggle[aria-expanded="true"] .nexusforge-submenu-toggle__icon { transform: rotate(-135deg); }
+
+	.nexusforge-submenu-toggle {
+		position: absolute;
+		top: 0.3rem;
+		right: 0;
+		width: 44px;
+		height: 44px;
+		margin: 0;
+	}
+
+	/* Backdrop: neutral dark scrim that sits behind the drawer, never over it. */
 	.nexusforge-nav-backdrop {
+		display: block;
 		position: fixed;
 		inset: 0;
-		background: rgba(36, 58, 52, 0.35);
+		background: rgba(0, 0, 0, 0.6);
 		opacity: 0;
 		visibility: hidden;
-		transition: opacity 0.25s ease, visibility 0.25s;
+		transition: opacity 0.25s ease, visibility 0s linear 0.25s;
 		z-index: calc(var(--nexusforge-z-drawer) - 1);
 	}
 
-	.nexusforge-nav-backdrop.is-visible { opacity: 1; visibility: visible; }
+	.nexusforge-nav-backdrop.is-visible {
+		opacity: 1;
+		visibility: visible;
+		transition: opacity 0.25s ease, visibility 0s;
+	}
 
 	body.nexusforge-nav-open { overflow: hidden; }
+}
+
+@media (max-width: 782px) {
+	.admin-bar .nexusforge-primary-nav { top: 46px; }
 }
 
 @media (max-width: 600px) {
@@ -790,20 +1022,6 @@ select:focus {
 	max-width: 100vw;
 	margin-left: calc(50% - 50vw);
 	margin-right: calc(50% - 50vw);
-}
-
-/* WordPress accessibility helper (focusable variant). */
-.screen-reader-text:focus {
-	position: fixed;
-	top: var(--nexusforge-space-2);
-	left: var(--nexusforge-space-2);
-	z-index: var(--nexusforge-z-skip);
-	width: auto;
-	height: auto;
-	clip-path: none;
-	padding: var(--nexusforge-space-2) var(--nexusforge-space-4);
-	background: var(--nexusforge-color-surface);
-	border-radius: var(--nexusforge-radius-sm);
 }
 
 /* ============================================================= ELEMENTOR */

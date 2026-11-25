@@ -20,7 +20,7 @@ $nexusforge_unique_id = wp_unique_id( 'search-field-' );
 		id="<?php echo esc_attr( $nexusforge_unique_id ); ?>"
 		class="search-field"
 		placeholder="<?php echo esc_attr_x( 'Search&hellip;', 'placeholder', 'nexusforge' ); ?>"
-		value="<?php echo get_search_query(); ?>"
+		value="<?php echo esc_attr( get_search_query( false ) ); ?>"
 		name="s"
 	/>
 	<button type="submit" class="nexusforge-btn nexusforge-btn--primary search-submit">

@@ -73,6 +73,7 @@ function nexusforge_primary_menu_fallback() {
 			'before'    => '<ul class="nexusforge-menu">',
 			'after'     => '</ul>',
 			'show_home' => true,
+			'depth'     => 1,
 		)
 	);
 }

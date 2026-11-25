@@ -2,7 +2,7 @@
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: block-styles, custom-background, custom-colors, custom-header, custom-logo, custom-menu, editor-style, featured-images, footer-widgets, threaded-comments, translation-ready, wide-blocks
@@ -37,6 +37,45 @@ only where you choose to build with it.
 Appearance → Customize → NexusForge — Design System. Each control maps to one design token.
 
 == Changelog ==
+
+= 1.0.4 =
+Addresses the three items raised in the WordPress.org theme review of 1.0.3.
+
+* Skip link (review item 1): the "Skip to content" link no longer overlaps the WordPress
+  admin bar. When focused it is pinned to the top left of the viewport, offset below the
+  toolbar (32px on desktop, 46px at 782px and below), with its own visible focus outline.
+* Keyboard navigation — mobile menu (review item 2):
+  * The mobile menu is now a proper modal drawer with a visible, labelled "Close menu"
+    button. Opening it moves focus into the drawer; Tab and Shift+Tab are trapped inside
+    it and wrap around; Escape, the Close button and the overlay all close it; closing
+    returns focus to the menu button. `aria-expanded` / `aria-controls` are kept in sync
+    and the rest of the page is made inert while the drawer is open.
+  * Fixed the tinted overlay being painted on top of the menu itself: the overlay now sits
+    behind the drawer and is a neutral dark scrim (no green tint).
+  * Links inside the closed drawer and inside collapsed submenus can no longer receive
+    keyboard focus.
+* Keyboard navigation — menus and focus (review item 2):
+  * Every level of the dropdown menu is reachable with Tab; each parent item has a toggle
+    button whose `aria-expanded` state matches what is shown; Escape closes an open
+    dropdown and returns focus to its toggle. Third-level submenus now fly out to the
+    side on desktop and expand as an accordion in the mobile drawer.
+  * A clearly visible 3px focus indicator is shown on all links, buttons and form fields
+    (light on dark surfaces such as the footer). The theme no longer uses `outline: none`
+    anywhere; hover styles are mirrored for keyboard focus.
+  * The navigation walker now extends the core walker output, so `aria-current`, link
+    attributes and menu filters are preserved.
+* Security (review item 3): `inc/customizer-css.php` now validates every Customizer value
+  again at output time (hex colours via sanitize_hex_color(); integers cast and clamped to
+  a fixed range; hard-coded property names; final wp_strip_all_tags()), in addition to the
+  sanitize callbacks that run before saving. Numeric settings share one range definition
+  between the controls, the sanitize callback and the CSS compiler. `searchform.php` and
+  `footer.php` use explicit late escaping.
+* Accessibility extras found while re-testing: the search results template now has a
+  level-one heading; the starter "trusted by" names use the secondary text colour
+  (contrast 2.5:1 -> 6.4:1) and the process step numbers use deep teal (4.45:1 -> 7:1+).
+* Other: native submit buttons (e.g. the comment form) are styled as theme buttons with a
+  44px target; the page-list menu fallback is limited to top-level pages; the translation
+  template (`languages/nexusforge.pot`) was regenerated.
 
 = 1.0.3 =
 * Rebranding: the theme identity was changed to NexusForge. Theme name, directory slug,

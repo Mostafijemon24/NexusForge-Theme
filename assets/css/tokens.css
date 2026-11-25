@@ -70,12 +70,17 @@
 	--nexusforge-shadow-lg: 0 24px 60px -30px rgba(36, 58, 52, 0.35);
 
 	/* --- Focus ----------------------------------------------------------- */
-	--nexusforge-focus-ring: 2px solid var(--nexusforge-color-brand);
-	--nexusforge-focus-offset: 3px;
+	/* The ring follows the body text colour, so it always contrasts with the
+	   canvas (deep ink on ivory/white/mint: >= 10:1). Dark surfaces switch to
+	   the inverse colour in main.css. */
+	--nexusforge-color-focus: var(--nexusforge-color-text);
+	--nexusforge-color-focus-inverse: var(--nexusforge-white);
+	--nexusforge-focus-ring: 3px solid var(--nexusforge-color-focus);
+	--nexusforge-focus-offset: 2px;
 
 	/* --- Z-index --------------------------------------------------------- */
 	--nexusforge-z-header: 100;
 	--nexusforge-z-dropdown: 200;
 	--nexusforge-z-drawer: 300;
-	--nexusforge-z-skip: 400;
+	--nexusforge-z-skip: 100000; /* above the WordPress admin bar (99999) */
 }

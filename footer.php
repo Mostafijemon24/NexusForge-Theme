@@ -20,7 +20,7 @@ if ( ! ( function_exists( 'nexusforge_elementor_did_location' ) && nexusforge_el
 					<div class="nexusforge-footer__brand">
 						<div class="nexusforge-branding">
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-								<span class="site-name"><?php bloginfo( 'name' ); ?></span><span class="nexusforge-dot">.</span>
+								<span class="site-name"><?php echo esc_html( get_bloginfo( 'name', 'display' ) ); ?></span><span class="nexusforge-dot">.</span>
 							</a>
 						</div>
 						<?php
