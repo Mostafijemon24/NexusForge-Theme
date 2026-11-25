@@ -1,0 +1,57 @@
+name: Release
+
+# Pushing a tag such as v1.0.4 builds the installable theme ZIP and publishes
+# a GitHub release with the ZIP and the PDF user guide attached.
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build ZIP and publish release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the tagged commit
+        uses: actions/checkout@v4
+
+      - name: Check the tag matches the theme version
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          STYLE_VERSION="$(sed -n 's/^Version:[[:space:]]*//p' style.css | head -n 1 | tr -d '\r')"
+          if [ "$VERSION" != "$STYLE_VERSION" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match style.css version $STYLE_VERSION" >&2
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - name: Build the theme ZIP
+        run: |
+          # .gitattributes export-ignore rules keep repository-only files out.
+          git archive --format=zip --prefix=nexusforge/ -o "nexusforge-${VERSION}.zip" HEAD
+          unzip -l "nexusforge-${VERSION}.zip" | tail -n 1
+
+      - name: Write release notes from readme.txt
+        run: |
+          {
+            echo "## Install"
+            echo
+            echo "Download \`nexusforge-${VERSION}.zip\` below and upload it under **Appearance → Themes → Add Theme → Upload Theme**. Use this ZIP rather than the automatic \"Source code\" archives, which are not packaged for WordPress."
+            echo
+            echo "## Changes"
+            echo
+            awk -v v="$VERSION" '$0 == "= " v " =" { found = 1; next } /^= [0-9]+\.[0-9]+(\.[0-9]+)? =$/ { found = 0 } /^== / { found = 0 } found' readme.txt
+          } > release-notes.md
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "nexusforge-${VERSION}.zip" \
+            ".github/assets/NexusForge-Documentation.pdf" \
+            --title "NexusForge ${VERSION}" \
+            --notes-file release-notes.md
