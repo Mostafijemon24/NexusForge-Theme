@@ -1,7 +1,7 @@
 /**
  * NexusForge — Design tokens (the single source of truth for the palette & scales).
  * Mirrored into theme.json; a small subset is overridden by the Customizer
- * via an inline :root block. See docs/DESIGN-TOKENS.md.
+ * via an inline :root block. See docs/index.html#design-tokens.
  */
 
 :root {

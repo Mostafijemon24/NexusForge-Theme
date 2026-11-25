@@ -27,7 +27,8 @@ function nexusforge_register_block_styles() {
 		'core/button',
 		array(
 			'name'  => 'nexusforge-outline',
-			'label' => __( 'Outline', 'nexusforge' ),
+			// Named "Brand Outline" so it is not confused with the core "Outline" style.
+			'label' => __( 'Brand Outline', 'nexusforge' ),
 		)
 	);
 
@@ -141,8 +142,8 @@ function nexusforge_register_block_patterns() {
 	$column = function ( $heading, $text ) {
 		return '<!-- wp:column -->'
 			. '<div class="wp-block-column">'
-			. '<!-- wp:heading {"level":3,"fontSize":"large"} -->'
-			. '<h3 class="wp-block-heading has-large-font-size">' . $heading . '</h3>'
+			. '<!-- wp:heading {"fontSize":"large"} -->'
+			. '<h2 class="wp-block-heading has-large-font-size">' . $heading . '</h2>'
 			. '<!-- /wp:heading -->'
 			. '<!-- wp:paragraph -->'
 			. '<p>' . $text . '</p>'
@@ -188,8 +189,8 @@ function nexusforge_register_block_patterns() {
 				. '<!-- /wp:paragraph -->'
 				. '<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->'
 				. '<div class="wp-block-buttons">'
-				. '<!-- wp:button {"className":"is-style-nexusforge-pill"} -->'
-				. '<div class="wp-block-button is-style-nexusforge-pill"><a class="wp-block-button__link wp-element-button">' . $cta_b . '</a></div>'
+				. '<!-- wp:button {"backgroundColor":"surface","textColor":"brand-deep","className":"is-style-nexusforge-pill"} -->'
+				. '<div class="wp-block-button is-style-nexusforge-pill"><a class="wp-block-button__link has-brand-deep-color has-surface-background-color has-text-color has-background wp-element-button">' . $cta_b . '</a></div>'
 				. '<!-- /wp:button -->'
 				. '</div>'
 				. '<!-- /wp:buttons -->'

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-25T12:36:22+00:00\n"
+"POT-Creation-Date: 2026-11-25T13:12:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: nexusforge\n"
@@ -18,7 +18,7 @@ msgstr ""
 #. Author of the theme
 #: style.css:2
 #: style.css:3
-#: inc/blocks.php:95
+#: inc/blocks.php:96
 msgid "NexusForge"
 msgstr ""
 
@@ -68,7 +68,7 @@ msgid "Comments are closed."
 msgstr ""
 
 #: footer.php:39
-#: inc/setup.php:114
+#: inc/setup.php:126
 msgid "Footer"
 msgstr ""
 
@@ -97,101 +97,101 @@ msgstr ""
 msgid "From the field"
 msgstr ""
 
-#: inc/blocks.php:30
-msgid "Outline"
+#: inc/blocks.php:31
+msgid "Brand Outline"
 msgstr ""
 
-#: inc/blocks.php:38
+#: inc/blocks.php:39
 msgid "Pill"
 msgstr ""
 
-#: inc/blocks.php:46
+#: inc/blocks.php:47
 msgid "Card"
 msgstr ""
 
-#: inc/blocks.php:54
+#: inc/blocks.php:55
 msgid "Framed"
 msgstr ""
 
-#: inc/blocks.php:62
+#: inc/blocks.php:63
 msgid "Panel"
 msgstr ""
 
-#: inc/blocks.php:99
+#: inc/blocks.php:100
 msgid "Build something people remember"
 msgstr ""
 
-#: inc/blocks.php:100
+#: inc/blocks.php:101
 msgid "A clean, fast foundation for your next site — flexible layouts, accessible components, and a design system you can make your own."
 msgstr ""
 
-#: inc/blocks.php:101
+#: inc/blocks.php:102
 #: template-parts/front/hero.php:19
 msgid "Get started"
 msgstr ""
 
-#: inc/blocks.php:102
+#: inc/blocks.php:103
 #: template-parts/front/hero.php:20
 msgid "Learn more"
 msgstr ""
 
-#: inc/blocks.php:107
+#: inc/blocks.php:108
 msgid "Hero with call to action"
 msgstr ""
 
-#: inc/blocks.php:108
+#: inc/blocks.php:109
 msgid "A centered hero with a headline, supporting text, and two buttons."
 msgstr ""
 
-#: inc/blocks.php:134
+#: inc/blocks.php:135
 msgid "Fast by default"
 msgstr ""
 
-#: inc/blocks.php:135
+#: inc/blocks.php:136
 msgid "Lightweight markup, local fonts, and deferred scripts keep pages quick to load."
 msgstr ""
 
-#: inc/blocks.php:136
+#: inc/blocks.php:137
 msgid "Accessible components"
 msgstr ""
 
-#: inc/blocks.php:137
+#: inc/blocks.php:138
 msgid "Keyboard-friendly navigation, clear focus states, and semantic landmarks."
 msgstr ""
 
-#: inc/blocks.php:138
+#: inc/blocks.php:139
 msgid "Yours to shape"
 msgstr ""
 
-#: inc/blocks.php:139
+#: inc/blocks.php:140
 msgid "A tidy design system with colours, type, and spacing you can adjust."
 msgstr ""
 
-#: inc/blocks.php:157
+#: inc/blocks.php:158
 msgid "Three feature columns"
 msgstr ""
 
-#: inc/blocks.php:158
+#: inc/blocks.php:159
 msgid "A three-column row for highlighting features or services."
 msgstr ""
 
-#: inc/blocks.php:171
+#: inc/blocks.php:172
 msgid "Ready to get building?"
 msgstr ""
 
-#: inc/blocks.php:172
+#: inc/blocks.php:173
 msgid "Start with a blank canvas or one of these patterns and make it your own."
 msgstr ""
 
-#: inc/blocks.php:173
+#: inc/blocks.php:174
 msgid "Start now"
 msgstr ""
 
-#: inc/blocks.php:178
+#: inc/blocks.php:179
 msgid "Call to action band"
 msgstr ""
 
-#: inc/blocks.php:179
+#: inc/blocks.php:180
 msgid "A full-width brand-coloured band with a heading and a button."
 msgstr ""
 
@@ -233,15 +233,15 @@ msgstr ""
 msgid "Button corner radius (px)"
 msgstr ""
 
-#: inc/setup.php:89
+#: inc/setup.php:101
 msgid "Primary Menu"
 msgstr ""
 
-#: inc/setup.php:90
+#: inc/setup.php:102
 msgid "Footer Menu"
 msgstr ""
 
-#: inc/setup.php:116
+#: inc/setup.php:128
 msgid "Appears in the site footer."
 msgstr ""
 

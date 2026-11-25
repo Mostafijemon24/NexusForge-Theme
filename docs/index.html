@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NexusForge Theme Documentation</title>
+<meta name="description" content="Installation, setup, customisation and developer reference for the NexusForge WordPress theme.">
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+
+<div class="layout">
+
+<aside class="sidebar">
+	<a class="brand" href="#top">NexusForge<span>.</span></a>
+	<p class="brand-sub">Theme documentation &middot; version 1.0.4</p>
+	<nav aria-label="Table of contents">
+		<p class="toc-title" id="toc-title">Contents</p>
+		<ol class="toc" aria-labelledby="toc-title">
+			<li><a href="#introduction">Introduction</a></li>
+			<li><a href="#requirements">Requirements</a></li>
+			<li><a href="#installation">Installation</a></li>
+			<li><a href="#quick-start">Quick start</a></li>
+			<li><a href="#anatomy">Theme anatomy</a></li>
+			<li><a href="#site-identity">Site identity &amp; logo</a></li>
+			<li><a href="#menus">Menus &amp; navigation</a></li>
+			<li><a href="#homepage">Homepage setup</a></li>
+			<li><a href="#design-system">Design System (Customizer)</a></li>
+			<li><a href="#header-background">Header image &amp; background</a></li>
+			<li><a href="#blog">Blog, posts &amp; search</a></li>
+			<li><a href="#footer">Footer &amp; widgets</a></li>
+			<li><a href="#blocks">Block editor: styles &amp; patterns</a></li>
+			<li><a href="#elementor">Elementor compatibility</a></li>
+			<li><a href="#accessibility">Accessibility</a></li>
+			<li><a href="#translation">Translation</a></li>
+			<li><a href="#developers">Developer reference</a></li>
+			<li><a href="#troubleshooting">Troubleshooting &amp; FAQ</a></li>
+			<li><a href="#credits">Changelog, licence &amp; credits</a></li>
+		</ol>
+	</nav>
+</aside>
+
+<main class="main" id="content">
+
+<header class="hero" id="top">
+	<div class="wrap">
+		<p class="eyebrow">Theme documentation</p>
+		<h1>NexusForge user guide</h1>
+		<p class="lead">Everything you need to install, set up and customise NexusForge &mdash; a lightweight, fluidly responsive WordPress theme with a soft teal, mint and ivory identity. Screenshots are numbered; each number is explained in the list below the image.</p>
+		<ul class="meta">
+			<li>Version 1.0.4</li>
+			<li>WordPress 6.4+</li>
+			<li>PHP 7.4+</li>
+			<li>GPL v2 or later</li>
+		</ul>
+	</div>
+</header>
+
+<!-- ============================================================ 01 -->
+<section class="doc" id="introduction">
+<div class="wrap">
+	<h2><span class="num">01</span>Introduction</h2>
+	<p>NexusForge is a hybrid classic theme: it uses PHP templates for the page structure, <code>theme.json</code> for block editor settings, and a small set of CSS custom properties (&ldquo;design tokens&rdquo;) for colours, type and spacing. It works on its own, with the block editor, and with Elementor &mdash; Elementor is supported but never required.</p>
+
+	<ul class="cards">
+		<li><strong>Lightweight</strong><span>No CSS framework, no icon font, no jQuery. One small deferred script handles navigation.</span></li>
+		<li><strong>Fluid layout</strong><span>Type and spacing scale smoothly from small phones to ultrawide screens.</span></li>
+		<li><strong>Six design controls</strong><span>Brand, canvas and text colours, base font size, content width and corner radius &mdash; with live preview.</span></li>
+		<li><strong>Keyboard friendly</strong><span>Skip link, visible focus rings, keyboard-operable dropdowns and a focus-trapped mobile menu.</span></li>
+		<li><strong>Block ready</strong><span>Five block styles, three starter patterns and a matching editor canvas.</span></li>
+		<li><strong>Private by default</strong><span>The Manrope font is bundled with the theme. No external font or script requests.</span></li>
+	</ul>
+
+	<div class="note">
+		<span class="note__title">How to read the screenshots</span>
+		<p>Screenshots were taken on WordPress 7.1 with sample content. Pink numbered markers point at the parts being described; the numbered list under each figure explains them. Click any screenshot to open it at full size.</p>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 02 -->
+<section class="doc" id="requirements">
+<div class="wrap">
+	<h2><span class="num">02</span>Requirements</h2>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Item</th><th scope="col">Requirement</th><th scope="col">Notes</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">WordPress</th><td>6.4 or newer</td><td>Tested up to 7.1.</td></tr>
+			<tr><th scope="row">PHP</th><td>7.4 or newer</td><td>PHP 8.x is supported.</td></tr>
+			<tr><th scope="row">Plugins</th><td>None</td><td>Elementor (free) is optional. See <a href="#elementor">Elementor compatibility</a>.</td></tr>
+			<tr><th scope="row">Browsers</th><td>Current Chrome, Edge, Firefox and Safari</td><td>The mobile menu uses the <code>inert</code> attribute and <code>:focus-visible</code>, supported by all current browsers.</td></tr>
+		</tbody>
+	</table>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 03 -->
+<section class="doc" id="installation">
+<div class="wrap">
+	<h2><span class="num">03</span>Installation</h2>
+
+	<h3>Option A &mdash; upload the ZIP in WordPress</h3>
+	<ol class="steps">
+		<li>In the WordPress dashboard go to <span class="path">Appearance &rarr; Themes</span> and click <strong>Add Theme</strong>.</li>
+		<li>Click <strong>Upload Theme</strong>, choose the <code>nexusforge</code> ZIP file and click <strong>Install Now</strong>.</li>
+		<li>When WordPress reports success, click <strong>Activate</strong>.</li>
+	</ol>
+
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/admin-upload.png"><img src="assets/img/admin-upload.png" width="1280" height="330" alt="The Add Themes screen with the Upload Theme button, the file chooser and the Install Now button marked 1 to 3."></a>
+		<figcaption><b>Figure 1.</b> Uploading the theme ZIP (<span class="path">Appearance &rarr; Themes &rarr; Add Theme</span>).</figcaption>
+		<ol class="legend">
+			<li><b>Upload Theme</b> &mdash; opens the upload form.</li>
+			<li><b>Choose File</b> &mdash; select the theme ZIP from your computer.</li>
+			<li><b>Install Now</b> &mdash; uploads and installs the theme.</li>
+		</ol>
+	</figure>
+
+	<h3>Option B &mdash; upload by FTP / file manager</h3>
+	<ol class="steps">
+		<li>Unzip the theme. You should have a single folder named <code>nexusforge</code>.</li>
+		<li>Upload that folder to <code>/wp-content/themes/</code> on your server.</li>
+		<li>Go to <span class="path">Appearance &rarr; Themes</span> and activate <strong>NexusForge</strong>.</li>
+	</ol>
+
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/admin-themes.png"><img src="assets/img/admin-themes.png" width="1280" height="520" loading="lazy" alt="The Themes screen with NexusForge shown as the active theme. The Add Theme button, the active theme card and its Customize button are marked 1 to 3."></a>
+		<figcaption><b>Figure 2.</b> NexusForge active on the Themes screen.</figcaption>
+		<ol class="legend">
+			<li><b>Add Theme</b> &mdash; start here to upload the ZIP.</li>
+			<li><b>Active theme card</b> &mdash; confirms NexusForge is active.</li>
+			<li><b>Customize</b> &mdash; opens the Customizer with live preview.</li>
+		</ol>
+	</figure>
+
+	<div class="note">
+		<span class="note__title">Updating</span>
+		<p>Install a newer ZIP the same way. WordPress asks whether to replace the installed version &mdash; choose <strong>Replace installed with uploaded</strong>. Your Customizer settings, menus and widgets are kept. If you have edited theme files directly, those edits are lost; use a <a href="#child-theme">child theme</a> instead.</p>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 04 -->
+<section class="doc" id="quick-start">
+<div class="wrap">
+	<h2><span class="num">04</span>Quick start</h2>
+	<p>A fresh install looks complete straight away because the theme shows built-in starter sections on the homepage. These seven steps turn it into your site.</p>
+	<ol class="steps">
+		<li><strong>Set your name and logo</strong> &mdash; <span class="path">Appearance &rarr; Customize &rarr; Site Identity</span>. <a href="#site-identity">Details</a></li>
+		<li><strong>Create your pages</strong> &mdash; at least <em>Home</em>, <em>About</em>, <em>Contact</em> and <em>Blog</em>. Give the Contact page the slug <code>contact</code> and the About page the slug <code>about</code>; the theme&rsquo;s built-in buttons link to those addresses. <a href="#built-in-links">Why</a></li>
+		<li><strong>Choose the homepage</strong> &mdash; <span class="path">Settings &rarr; Reading</span>: set <em>Home</em> as the homepage and <em>Blog</em> as the posts page. <a href="#homepage">Details</a></li>
+		<li><strong>Build the menus</strong> &mdash; <span class="path">Appearance &rarr; Menus</span>: create a menu for the <em>Primary Menu</em> location and, optionally, one for <em>Footer Menu</em>. <a href="#menus">Details</a></li>
+		<li><strong>Pick your colours</strong> &mdash; <span class="path">Appearance &rarr; Customize &rarr; NexusForge &mdash; Design System</span>. <a href="#design-system">Details</a></li>
+		<li><strong>Fill the footer</strong> &mdash; <span class="path">Appearance &rarr; Widgets</span>, <em>Footer</em> area. <a href="#footer">Details</a></li>
+		<li><strong>Write your homepage</strong> &mdash; edit the <em>Home</em> page with blocks, the theme&rsquo;s patterns, or Elementor. As soon as the page has content, it replaces the starter sections. <a href="#homepage">Details</a></li>
+	</ol>
+</div>
+</section>
+
+<!-- ============================================================ 05 -->
+<section class="doc" id="anatomy">
+<div class="wrap">
+	<h2><span class="num">05</span>Theme anatomy</h2>
+	<p>This is the homepage on a fresh install, showing the header, the seven starter sections and the footer. The starter sections appear only while your homepage has no content of its own (see <a href="#homepage">Homepage setup</a>).</p>
+
+	<figure class="fig fig--side">
+		<a class="fig__img" href="assets/img/front-anatomy.png"><img src="assets/img/front-anatomy.png" width="1280" height="3573" loading="lazy" alt="Full-length screenshot of the starter homepage with nine numbered regions from the header at the top to the footer at the bottom."></a>
+		<figcaption><b>Figure 3.</b> The starter homepage, top to bottom.</figcaption>
+		<ol class="legend">
+			<li><b>Header</b> &mdash; logo or site title, primary menu and two action links. <a href="#menus">Menus</a></li>
+			<li><b>Hero</b> &mdash; your tagline as the small label, a headline, intro text and two buttons (<em>Get started</em> &rarr; <code>/contact/</code>, <em>Learn more</em> &rarr; <code>/about/</code>).</li>
+			<li><b>Trust strip</b> &mdash; a row of placeholder client names.</li>
+			<li><b>Feature cards</b> &mdash; three benefit cards under &ldquo;What you get&rdquo;.</li>
+			<li><b>Process</b> &mdash; four numbered steps on a mint band.</li>
+			<li><b>Testimonial</b> &mdash; a single centred quote.</li>
+			<li><b>Insights</b> &mdash; your three latest posts. Shown only when at least one post is published.</li>
+			<li><b>Call to action</b> &mdash; deep-teal band with a <em>Get in touch</em> button (&rarr; <code>/contact/</code>).</li>
+			<li><b>Footer</b> &mdash; site name and tagline, the Footer widget area, the Footer menu and the copyright line. <a href="#footer">Footer</a></li>
+		</ol>
+	</figure>
+
+	<h3>Templates included</h3>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Page type</th><th scope="col">Template file</th><th scope="col">What it shows</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">Homepage</th><td><code>front-page.php</code></td><td>Your page content, the starter sections, or latest posts.</td></tr>
+			<tr><th scope="row">Blog (posts page)</th><td><code>home.php</code></td><td>Title banner and a grid of posts with pagination.</td></tr>
+			<tr><th scope="row">Single post</th><td><code>single.php</code></td><td>Meta, title, wide featured image, content, tags, previous/next links, comments.</td></tr>
+			<tr><th scope="row">Page</th><td><code>page.php</code></td><td>Title, optional featured image, content, comments if enabled.</td></tr>
+			<tr><th scope="row">Archives</th><td><code>archive.php</code></td><td>Category, tag, date and author archives as a post grid.</td></tr>
+			<tr><th scope="row">Search results</th><td><code>search.php</code></td><td>Heading, search form and a list of results.</td></tr>
+			<tr><th scope="row">Not found</th><td><code>404.php</code></td><td>404 message, a link home and a search form.</td></tr>
+			<tr><th scope="row">Fallback</th><td><code>index.php</code></td><td>Used when no more specific template applies.</td></tr>
+		</tbody>
+	</table>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 06 -->
+<section class="doc" id="site-identity">
+<div class="wrap">
+	<h2><span class="num">06</span>Site identity &amp; logo</h2>
+	<p>Open <span class="path">Appearance &rarr; Customize</span>. The Customizer lists every area the theme supports:</p>
+
+	<figure class="fig fig--narrow">
+		<a class="fig__img" href="assets/img/customizer-root.png"><img src="assets/img/customizer-root.png" width="1000" height="640" loading="lazy" alt="The Customizer's main panel with seven sections marked 1 to 7."></a>
+		<figcaption><b>Figure 4.</b> Customizer sections used by NexusForge.</figcaption>
+		<ol class="legend">
+			<li><b>Site Identity</b> &mdash; logo, site title, tagline, site icon.</li>
+			<li><b>NexusForge &mdash; Design System</b> &mdash; the theme&rsquo;s six design controls. <a href="#design-system">Details</a></li>
+			<li><b>Header Image</b> &mdash; optional banner under the header. <a href="#header-background">Details</a></li>
+			<li><b>Background Image</b> &mdash; optional page background image.</li>
+			<li><b>Menus</b> &mdash; create menus and assign locations with live preview.</li>
+			<li><b>Widgets</b> &mdash; edit the Footer widget area with live preview.</li>
+			<li><b>Homepage Settings</b> &mdash; choose a static homepage and a posts page.</li>
+		</ol>
+	</figure>
+
+	<h3>Logo, title and tagline</h3>
+	<figure class="fig fig--narrow">
+		<a class="fig__img" href="assets/img/customizer-identity.png"><img src="assets/img/customizer-identity.png" width="1000" height="700" loading="lazy" alt="The Site Identity section of the Customizer with the Logo, Site Title, Tagline and Site Icon controls marked 1 to 4."></a>
+		<figcaption><b>Figure 5.</b> Site Identity controls.</figcaption>
+		<ol class="legend">
+			<li><b>Logo</b> &mdash; replaces the text title in the header. Recommended size 360&times;96&nbsp;px (shown at up to 48&nbsp;px tall); any proportions are accepted.</li>
+			<li><b>Site Title</b> &mdash; shown in the header when no logo is set, and in the footer. A teal dot is added after it automatically.</li>
+			<li><b>Tagline</b> &mdash; shown under the site name in the footer and as the small label above the starter hero headline.</li>
+			<li><b>Site Icon</b> &mdash; the browser-tab icon (favicon). Use a square image of at least 512&times;512&nbsp;px.</li>
+		</ol>
+	</figure>
+
+	<div class="note">
+		<p><strong>Tip.</strong> Upload a logo at twice its display size so it stays sharp on high-density screens. SVG logos need a plugin that enables SVG uploads; the theme displays them like any other image.</p>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 07 -->
+<section class="doc" id="menus">
+<div class="wrap">
+	<h2><span class="num">07</span>Menus &amp; navigation</h2>
+	<p>The theme has two menu locations:</p>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Location</th><th scope="col">Where it appears</th><th scope="col">Levels</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">Primary Menu</th><td>The header, and the slide-in menu on small screens.</td><td>Up to three levels work well (item &rarr; dropdown &rarr; fly-out).</td></tr>
+			<tr><th scope="row">Footer Menu</th><td>The &ldquo;Links&rdquo; column in the footer.</td><td>Top level only. Sub-items are not shown.</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<h3>Create and assign a menu</h3>
+	<ol class="steps">
+		<li>Go to <span class="path">Appearance &rarr; Menus</span> and click <strong>create a new menu</strong>. Name it, for example, &ldquo;Primary&rdquo;.</li>
+		<li>Tick pages, posts, categories or custom links on the left and click <strong>Add to Menu</strong>.</li>
+		<li>Drag items to reorder them. Drag an item slightly to the right to make it a sub-item of the one above.</li>
+		<li>Under <strong>Menu Settings</strong> tick <strong>Primary Menu</strong> (or <strong>Footer Menu</strong>).</li>
+		<li>Click <strong>Save Menu</strong>.</li>
+	</ol>
+
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/admin-menus.png"><img src="assets/img/admin-menus.png" width="1283" height="1221" loading="lazy" alt="The Menus screen editing a menu called Primary. Six areas are marked: the add items panel, the menu structure, a sub item, a third-level sub item, the menu location checkboxes and the Save Menu button."></a>
+		<figcaption><b>Figure 6.</b> Building the primary menu.</figcaption>
+		<ol class="legend">
+			<li><b>Add menu items</b> &mdash; pages, posts, custom links and categories.</li>
+			<li><b>Menu structure</b> &mdash; drag to reorder.</li>
+			<li><b>Sub item</b> &mdash; indented once: appears in the dropdown.</li>
+			<li><b>Third-level item</b> &mdash; indented twice: appears in a fly-out.</li>
+			<li><b>Menu location</b> &mdash; tick <em>Primary Menu</em> or <em>Footer Menu</em>.</li>
+			<li><b>Save Menu</b> &mdash; nothing changes on the site until you save.</li>
+		</ol>
+	</figure>
+
+	<div class="note">
+		<p><strong>No menu assigned?</strong> The header shows a simple list of your top-level pages (with a Home link) so the site is never without navigation. Assign a menu to take control of the order and labels.</p>
+	</div>
+
+	<h3>The header on desktop</h3>
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/header-anatomy.png"><img src="assets/img/header-anatomy.png" width="1280" height="330" loading="lazy" alt="The site header on a wide screen with the Services dropdown and its fly-out open. Seven parts are marked."></a>
+		<figcaption><b>Figure 7.</b> Header on screens wider than 900&nbsp;px, with a dropdown open.</figcaption>
+		<ol class="legend">
+			<li><b>Logo / site title</b> &mdash; links to the homepage.</li>
+			<li><b>Primary menu</b> &mdash; the current page is highlighted in deep teal.</li>
+			<li><b>Submenu button</b> &mdash; a real button next to every item that has sub-items. Opens and closes the dropdown by click, <kbd>Enter</kbd> or <kbd>Space</kbd>.</li>
+			<li><b>Dropdown</b> &mdash; also opens on mouse hover and when you <kbd>Tab</kbd> onto the parent item.</li>
+			<li><b>Fly-out</b> &mdash; third-level items open to the side.</li>
+			<li><b>Sign in</b> &mdash; links to the WordPress login page.</li>
+			<li><b>Book a call</b> &mdash; links to <code>/contact/</code>.</li>
+		</ol>
+	</figure>
+
+	<h3>The mobile menu</h3>
+	<p>At 900&nbsp;px and below the primary menu moves into a panel that slides in from the right. It behaves like a dialog: while it is open the rest of the page cannot be reached with the keyboard.</p>
+
+	<div class="fig-row">
+		<figure class="fig fig--phone">
+			<a class="fig__img" href="assets/img/mobile-header.png"><img src="assets/img/mobile-header.png" width="390" height="420" loading="lazy" alt="The header on a phone with the site title and the menu button marked 1 and 2."></a>
+			<figcaption><b>Figure 8.</b> Header on a phone.</figcaption>
+			<ol class="legend">
+				<li><b>Logo / site title</b>.</li>
+				<li><b>Menu button</b> &mdash; opens the menu.</li>
+			</ol>
+		</figure>
+		<figure class="fig fig--phone">
+			<a class="fig__img" href="assets/img/mobile-menu.png"><img src="assets/img/mobile-menu.png" width="390" height="700" loading="lazy" alt="The open mobile menu panel. The close button, the menu list, a submenu button, an expanded submenu and the dimmed page behind are marked 1 to 5."></a>
+			<figcaption><b>Figure 9.</b> Mobile menu open.</figcaption>
+			<ol class="legend">
+				<li><b>Close button</b> &mdash; receives focus when the menu opens.</li>
+				<li><b>Menu items</b> &mdash; the Primary Menu.</li>
+				<li><b>Submenu button</b> &mdash; expands or collapses sub-items.</li>
+				<li><b>Expanded submenu</b> &mdash; sub-items are indented.</li>
+				<li><b>Dimmed page</b> &mdash; tap it to close the menu.</li>
+			</ol>
+		</figure>
+	</div>
+
+	<p>The menu also closes with the <kbd>Esc</kbd> key, and focus returns to the menu button. See <a href="#accessibility">Accessibility</a> for the full keyboard reference.</p>
+
+	<h3 id="built-in-links">Built-in links in the header and starter sections</h3>
+	<p>A few links are part of the theme rather than a menu. Create pages with these slugs so they do not lead to a &ldquo;not found&rdquo; page:</p>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Link</th><th scope="col">Where</th><th scope="col">Goes to</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">Book a call</th><td>Header</td><td><code>/contact/</code></td></tr>
+			<tr><th scope="row">Sign in</th><td>Header</td><td>The WordPress login page</td></tr>
+			<tr><th scope="row">Get started</th><td>Starter hero</td><td><code>/contact/</code></td></tr>
+			<tr><th scope="row">Learn more</th><td>Starter hero</td><td><code>/about/</code></td></tr>
+			<tr><th scope="row">Get in touch</th><td>Starter call-to-action band</td><td><code>/contact/</code></td></tr>
+			<tr><th scope="row">All articles</th><td>Starter Insights section</td><td>Your posts page (or the homepage if none is set)</td></tr>
+		</tbody>
+	</table>
+	</div>
+	<div class="note note--warn">
+		<p><strong>Good to know.</strong> <em>Sign in</em> and <em>Book a call</em> are hidden on screens narrower than 600&nbsp;px to keep the header uncluttered. If those links matter on phones, add them to your Primary Menu as well. To change or remove them, see <a href="#child-theme">Using a child theme</a>.</p>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 08 -->
+<section class="doc" id="homepage">
+<div class="wrap">
+	<h2><span class="num">08</span>Homepage setup</h2>
+	<p>What the homepage shows depends on two things: the setting under <span class="path">Settings &rarr; Reading</span> and whether your homepage has content.</p>
+
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Reading setting</th><th scope="col">Homepage content</th><th scope="col">Result</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">A static page</th><td>The page is empty</td><td>The theme&rsquo;s seven <strong>starter sections</strong> (Figure 3).</td></tr>
+			<tr><th scope="row">A static page</th><td>The page has blocks, classic content or an Elementor layout</td><td><strong>Your content</strong>, full width, with the theme header and footer.</td></tr>
+			<tr><th scope="row">Your latest posts</th><td>&mdash;</td><td>A <strong>grid of your latest posts</strong> with pagination.</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<h3>Set a static homepage</h3>
+	<ol class="steps">
+		<li>Create two pages under <span class="path">Pages &rarr; Add New</span>: one called <em>Home</em> and one called <em>Blog</em>. Leave <em>Blog</em> empty.</li>
+		<li>Go to <span class="path">Settings &rarr; Reading</span> and choose <strong>A static page</strong>.</li>
+		<li>Select <em>Home</em> as <strong>Homepage</strong> and <em>Blog</em> as <strong>Posts page</strong>, then <strong>Save Changes</strong>.</li>
+	</ol>
+
+	<figure class="fig fig--narrow">
+		<a class="fig__img" href="assets/img/admin-reading.png"><img src="assets/img/admin-reading.png" width="1000" height="330" loading="lazy" alt="Reading Settings with the static page option, the Homepage selector, the Posts page selector and the Save Changes button marked 1 to 4."></a>
+		<figcaption><b>Figure 10.</b> Reading Settings.</figcaption>
+		<ol class="legend">
+			<li><b>A static page</b> &mdash; switches from latest posts to a page.</li>
+			<li><b>Homepage</b> &mdash; the page used as your front page.</li>
+			<li><b>Posts page</b> &mdash; the page that lists your blog posts.</li>
+			<li><b>Save Changes</b>.</li>
+		</ol>
+	</figure>
+
+	<h3>Replacing the starter sections with your own content</h3>
+	<p>The starter sections are a placeholder so a new site never looks empty. Their wording is part of the theme and is not editable from the dashboard. To replace them, edit your <em>Home</em> page and add content:</p>
+	<ul>
+		<li><strong>With blocks</strong> &mdash; insert the theme&rsquo;s patterns (<a href="#patterns">Hero, Feature columns, Call-to-action band</a>) and adjust the text.</li>
+		<li><strong>With Elementor</strong> &mdash; click <em>Edit with Elementor</em> and design the page freely.</li>
+	</ul>
+	<p>As soon as the page is saved with content, the starter sections disappear and your content is shown instead. Delete the content to bring them back.</p>
+
+	<h3>How homepage content is laid out</h3>
+	<p>The homepage is a full-width canvas, so each block decides how wide it is:</p>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Block alignment</th><th scope="col">Width on the homepage</th><th scope="col">Typical use</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">None (default)</th><td>Reading column, 720&nbsp;px</td><td>Paragraphs, headings, lists</td></tr>
+			<tr><th scope="row">Wide width</th><td>Wide container, 1200&nbsp;px (the <em>Wide content width</em> control)</td><td>Hero panels, columns, galleries</td></tr>
+			<tr><th scope="row">Full width</th><td>Edge to edge</td><td>Coloured bands, cover images</td></tr>
+		</tbody>
+	</table>
+	</div>
+	<p>Set the alignment from the block toolbar (the <em>Align</em> button). The same three alignments work on ordinary pages and posts, where wide and full-width blocks break out of the reading column. A full-width block placed first or last sits flush against the header or footer.</p>
+</div>
+</section>
+
+<!-- ============================================================ 09 -->
+<section class="doc" id="design-system">
+<div class="wrap">
+	<h2><span class="num">09</span>Design System (Customizer)</h2>
+	<p>Go to <span class="path">Appearance &rarr; Customize &rarr; NexusForge &mdash; Design System</span>. Each control changes one global value, and the preview updates instantly without reloading.</p>
+
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/customizer-design.png"><img src="assets/img/customizer-design.png" width="1360" height="860" loading="lazy" alt="The Design System section in the Customizer with its six controls and the Publish button marked 1 to 7, next to a live preview of the homepage."></a>
+		<figcaption><b>Figure 11.</b> The six design controls.</figcaption>
+		<ol class="legend">
+			<li><b>Brand / primary color</b> &mdash; buttons, the dot after the site title, accents.</li>
+			<li><b>Page canvas color</b> &mdash; the page background and form fields.</li>
+			<li><b>Body text color</b> &mdash; text, headings, the keyboard focus ring and the footer background.</li>
+			<li><b>Base font size</b> &mdash; body text size on large screens.</li>
+			<li><b>Wide content width</b> &mdash; the maximum width of the header, footer and wide sections.</li>
+			<li><b>Button corner radius</b> &mdash; roundness of buttons and form fields.</li>
+			<li><b>Publish</b> &mdash; saves your changes and makes them live.</li>
+		</ol>
+	</figure>
+
+	<h3>Control reference</h3>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Control</th><th scope="col">Default</th><th scope="col">Allowed values</th><th scope="col">CSS variable</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">Brand / primary color</th><td><span class="swatch" style="background:#287c70"></span>#287C70</td><td>Any hex colour</td><td><code>--nexusforge-color-brand</code></td></tr>
+			<tr><th scope="row">Page canvas color</th><td><span class="swatch" style="background:#faf8f2"></span>#FAF8F2</td><td>Any hex colour</td><td><code>--nexusforge-color-canvas</code></td></tr>
+			<tr><th scope="row">Body text color</th><td><span class="swatch" style="background:#243a34"></span>#243A34</td><td>Any hex colour</td><td><code>--nexusforge-color-text</code></td></tr>
+			<tr><th scope="row">Base font size</th><td>17&nbsp;px</td><td>14 &ndash; 22&nbsp;px</td><td><code>--nexusforge-fs-body</code></td></tr>
+			<tr><th scope="row">Wide content width</th><td>1200&nbsp;px</td><td>960 &ndash; 1440&nbsp;px, steps of 20</td><td><code>--nexusforge-wide</code></td></tr>
+			<tr><th scope="row">Button corner radius</th><td>10&nbsp;px</td><td>0 &ndash; 40&nbsp;px</td><td><code>--nexusforge-radius-md</code></td></tr>
+		</tbody>
+	</table>
+	</div>
+	<p>Numbers outside the allowed range are brought back into range automatically, and anything that is not a valid colour or number is ignored.</p>
+
+	<h3>Live preview example</h3>
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/customizer-live.png"><img src="assets/img/customizer-live.png" width="1360" height="860" loading="lazy" alt="The Customizer with the brand colour changed to violet and the corner radius set to 28. The buttons in the preview are now violet and pill shaped."></a>
+		<figcaption><b>Figure 12.</b> Changing two controls updates the whole site preview.</figcaption>
+		<ol class="legend">
+			<li><b>Brand colour</b> changed to violet.</li>
+			<li><b>Corner radius</b> raised to 28&nbsp;px.</li>
+			<li><b>Result</b> &mdash; every button in the preview picks up both changes immediately.</li>
+		</ol>
+	</figure>
+
+	<div class="note note--warn">
+		<span class="note__title">Keep text readable</span>
+		<p>The theme&rsquo;s default colours meet WCAG AA contrast. If you change them, keep a strong contrast between the <em>Body text</em> and <em>Page canvas</em> colours (at least 4.5:1), and choose a <em>Brand</em> colour dark enough for white button text. Some supporting colours &mdash; deep teal links, mint bands and the dark footer &mdash; are fixed and do not follow these controls; see <a href="#design-tokens">Design tokens</a> to change them with CSS.</p>
+	</div>
+	<div class="note">
+		<p><strong>Editor note.</strong> The block editor always shows the theme&rsquo;s default colours and sizes. Customizer changes apply to the front end of the site.</p>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 10 -->
+<section class="doc" id="header-background">
+<div class="wrap">
+	<h2><span class="num">10</span>Header image &amp; background</h2>
+
+	<h3>Header image</h3>
+	<p><span class="path">Appearance &rarr; Customize &rarr; Header Image</span>. When you add an image it appears as a full-width banner directly beneath the site header, on every page. Remove the image and the banner disappears.</p>
+	<ul>
+		<li>Recommended size: <strong>1600&times;400&nbsp;px</strong>. Other sizes are accepted and scale to the full width.</li>
+		<li>The banner is a decorative image only; the site title and logo stay in the header above it.</li>
+	</ul>
+
+	<h3>Background image and colour</h3>
+	<p><span class="path">Appearance &rarr; Customize &rarr; Background Image</span> lets you place an image behind the whole page, and <span class="path">Colors</span> offers the standard WordPress <em>Background Color</em> control.</p>
+	<div class="note">
+		<p><strong>Which colour control should I use?</strong> Prefer <em>Page canvas color</em> in the Design System section: it also updates form fields and other parts that sit on the canvas. The WordPress <em>Background Color</em> control only changes the page background and, when set, takes priority over the canvas colour.</p>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 11 -->
+<section class="doc" id="blog">
+<div class="wrap">
+	<h2><span class="num">11</span>Blog, posts &amp; search</h2>
+
+	<h3>Blog and archive pages</h3>
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/blog-index.png"><img src="assets/img/blog-index.png" width="1280" height="860" loading="lazy" alt="The blog page showing a title banner and three post cards. The banner, a featured image, the meta line, a post title and a Read more link are marked 1 to 5."></a>
+		<figcaption><b>Figure 13.</b> The blog (posts page). Category, tag, date and author archives use the same grid.</figcaption>
+		<ol class="legend">
+			<li><b>Title banner</b> &mdash; shows the title of your posts page. Archives show the archive name and description.</li>
+			<li><b>Featured image</b> &mdash; cropped to 16:9. Posts without one get a soft mint placeholder.</li>
+			<li><b>Meta line</b> &mdash; category, date and estimated reading time.</li>
+			<li><b>Post title</b> &mdash; links to the post.</li>
+			<li><b>Read more</b> &mdash; links to the post.</li>
+		</ol>
+	</figure>
+	<ul>
+		<li>The grid shows three columns at the default content width and reflows down to one column on phones.</li>
+		<li>The text under each title is the post <strong>excerpt</strong>. Write one in the post sidebar for full control; otherwise WordPress uses the start of the post.</li>
+		<li>The number of posts per page is set under <span class="path">Settings &rarr; Reading</span>.</li>
+		<li>Reading time is estimated at 200 words per minute.</li>
+	</ul>
+
+	<h3>Single post</h3>
+	<figure class="fig fig--side fig--tall">
+		<a class="fig__img" href="assets/img/single-post.png"><img src="assets/img/single-post.png" width="1280" height="2244" loading="lazy" alt="A single post from top to bottom with six parts marked: meta line, title, featured image, content, post navigation and comment form."></a>
+		<figcaption><b>Figure 14.</b> Single post layout.</figcaption>
+		<ol class="legend">
+			<li><b>Meta line</b> &mdash; category, date, reading time.</li>
+			<li><b>Title</b>.</li>
+			<li><b>Featured image</b> &mdash; shown across the reading column at 16:9.</li>
+			<li><b>Content</b> &mdash; a comfortable reading column. Tags appear under the content.</li>
+			<li><b>Post navigation</b> &mdash; links to the previous and next post.</li>
+			<li><b>Comments</b> &mdash; the comment list and form, when comments are open. Replies are threaded.</li>
+		</ol>
+	</figure>
+	<p>To add a featured image, open the post, find <strong>Featured image</strong> in the right-hand sidebar and choose an image. For sharp results upload images at least 1280&nbsp;px wide. Turn comments on or off per post in the <strong>Discussion</strong> panel, or site-wide under <span class="path">Settings &rarr; Discussion</span>.</p>
+
+	<h3>Search results and the 404 page</h3>
+	<div class="fig-row">
+		<figure class="fig">
+			<a class="fig__img" href="assets/img/search.png"><img src="assets/img/search.png" width="880" height="560" loading="lazy" alt="The search results page with the heading, the search form and the first result marked 1 to 3."></a>
+			<figcaption><b>Figure 15.</b> Search results.</figcaption>
+			<ol class="legend">
+				<li><b>Heading</b> &mdash; repeats the search term.</li>
+				<li><b>Search form</b> &mdash; search again.</li>
+				<li><b>Result</b> &mdash; title, meta line and excerpt.</li>
+			</ol>
+		</figure>
+		<figure class="fig">
+			<a class="fig__img" href="assets/img/404.png"><img src="assets/img/404.png" width="880" height="520" loading="lazy" alt="The page-not-found screen with the large 404, the Back to home button and the search form marked 1 to 3."></a>
+			<figcaption><b>Figure 16.</b> Page not found.</figcaption>
+			<ol class="legend">
+				<li><b>404 message</b>.</li>
+				<li><b>Back to home</b>.</li>
+				<li><b>Search form</b>.</li>
+			</ol>
+		</figure>
+	</div>
+	<p>The theme does not place a search field in the header. To offer search site-wide, add the <strong>Search</strong> block to the Footer widget area.</p>
+</div>
+</section>
+
+<!-- ============================================================ 12 -->
+<section class="doc" id="footer">
+<div class="wrap">
+	<h2><span class="num">12</span>Footer &amp; widgets</h2>
+
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/footer.png"><img src="assets/img/footer.png" width="1280" height="312" loading="lazy" alt="The site footer with four kinds of content marked: the brand column, two widgets, the links column and the copyright line."></a>
+		<figcaption><b>Figure 17.</b> Footer layout.</figcaption>
+		<ol class="legend">
+			<li><b>Brand column</b> &mdash; site title and tagline (from Site Identity). Always shown.</li>
+			<li><b>Footer widget area</b> &mdash; each widget becomes its own column.</li>
+			<li><b>Links column</b> &mdash; the menu assigned to <em>Footer Menu</em>. Hidden when no menu is assigned.</li>
+			<li><b>Copyright line</b> &mdash; current year and site title, generated automatically.</li>
+		</ol>
+	</figure>
+	<p>Columns share the available width equally and stack on small screens. Two to three widgets plus the links column give the most balanced result.</p>
+
+	<h3>Edit the footer widgets</h3>
+	<ol class="steps">
+		<li>Go to <span class="path">Appearance &rarr; Widgets</span>.</li>
+		<li>Open the <strong>Footer</strong> area and click <strong>+</strong> to add a block &mdash; for example a Heading with a Paragraph, Latest Posts, Categories, Search or Social Icons.</li>
+		<li>Click <strong>Update</strong>.</li>
+	</ol>
+
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/admin-widgets.png"><img src="assets/img/admin-widgets.png" width="1280" height="520" loading="lazy" alt="The Widgets screen with the add block button, the Footer widget area and the Update button marked 1 to 3."></a>
+		<figcaption><b>Figure 18.</b> The Widgets screen.</figcaption>
+		<ol class="legend">
+			<li><b>Add block</b> &mdash; opens the block inserter.</li>
+			<li><b>Footer area</b> &mdash; the theme&rsquo;s single widget area.</li>
+			<li><b>Update</b> &mdash; saves the widgets.</li>
+		</ol>
+	</figure>
+	<div class="note">
+		<p><strong>Tip.</strong> To give a widget a title that matches the &ldquo;Links&rdquo; column, put a <strong>Heading</strong> block first and group it with the content (select both blocks, then choose <em>Group</em>). The theme styles that heading as a small uppercase column title.</p>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 13 -->
+<section class="doc" id="blocks">
+<div class="wrap">
+	<h2><span class="num">13</span>Block editor: styles &amp; patterns</h2>
+	<p>The editor canvas uses the theme&rsquo;s font, colours and spacing, so what you build looks the same on the site. The colour picker offers the theme palette, and the typography and spacing controls offer the theme&rsquo;s presets.</p>
+
+	<h3>Block styles</h3>
+	<p>Select a block, open the <strong>Block</strong> tab in the right-hand sidebar and look for <strong>Styles</strong>.</p>
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/editor-block-styles.png"><img src="assets/img/editor-block-styles.png" width="1280" height="520" loading="lazy" alt="The block editor with a Button block selected. The button and the Styles panel listing Fill, Outline, Brand Outline and Pill are marked 1 and 2."></a>
+		<figcaption><b>Figure 19.</b> Choosing a block style.</figcaption>
+		<ol class="legend">
+			<li><b>Selected block</b> &mdash; here a Button.</li>
+			<li><b>Styles</b> &mdash; <em>Brand Outline</em> and <em>Pill</em> are added by the theme; <em>Fill</em> and <em>Outline</em> come from WordPress.</li>
+		</ol>
+	</figure>
+
+	<figure class="fig fig--narrow">
+		<a class="fig__img" href="assets/img/block-styles.png"><img src="assets/img/block-styles.png" width="733" height="1036" loading="lazy" alt="Examples of the theme's block styles on a page: three buttons, a card group, a framed image and a panel quote, marked 1 to 6."></a>
+		<figcaption><b>Figure 20.</b> The theme&rsquo;s block styles on the site.</figcaption>
+		<ol class="legend">
+			<li><b>Button &mdash; default</b>.</li>
+			<li><b>Button &mdash; Brand Outline</b> &mdash; transparent with a brand-colour border; fills on hover and focus.</li>
+			<li><b>Button &mdash; Pill</b> &mdash; fully rounded ends.</li>
+			<li><b>Group &mdash; Card</b> &mdash; white panel with border, rounded corners and a soft shadow.</li>
+			<li><b>Image &mdash; Framed</b> &mdash; thin border and rounded corners.</li>
+			<li><b>Quote &mdash; Panel</b> &mdash; tinted call-out with a brand-colour rule.</li>
+		</ol>
+	</figure>
+
+	<h3 id="patterns">Starter patterns</h3>
+	<p>Patterns are ready-made groups of blocks. Open the block inserter, choose the <strong>Patterns</strong> tab and then the <strong>NexusForge</strong> category. Click a pattern to insert it, then edit the text.</p>
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/editor-patterns.png"><img src="assets/img/editor-patterns.png" width="1280" height="560" loading="lazy" alt="The block inserter open on the Patterns tab with the NexusForge category selected and three patterns listed. Four parts are marked."></a>
+		<figcaption><b>Figure 21.</b> Finding the theme&rsquo;s patterns.</figcaption>
+		<ol class="legend">
+			<li><b>Block inserter</b> &mdash; the <strong>+</strong> button in the top toolbar (shown here as &times; while open).</li>
+			<li><b>Patterns tab</b>.</li>
+			<li><b>NexusForge category</b>.</li>
+			<li><b>The three patterns</b> &mdash; click one to insert it.</li>
+		</ol>
+	</figure>
+
+	<figure class="fig">
+		<a class="fig__img" href="assets/img/patterns.png"><img src="assets/img/patterns.png" width="1280" height="1107" loading="lazy" alt="A page built from the three theme patterns, marked 1 to 3: a hero with two buttons, three feature columns and a call-to-action band."></a>
+		<figcaption><b>Figure 22.</b> The three patterns on a page.</figcaption>
+		<ol class="legend">
+			<li><b>Hero with call to action</b> &mdash; headline, text and two buttons on a pale mint panel.</li>
+			<li><b>Three feature columns</b> &mdash; three headings with supporting text.</li>
+			<li><b>Call to action band</b> &mdash; full-width brand-colour band with a white pill button.</li>
+		</ol>
+	</figure>
+
+	<h3>Editor presets</h3>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Colour</th><th scope="col">Value</th><th scope="col">Colour</th><th scope="col">Value</th></tr></thead>
+		<tbody>
+			<tr><td><span class="swatch" style="background:#287c70"></span>Brand Teal</td><td>#287C70</td><td><span class="swatch" style="background:#175e52"></span>Deep Teal</td><td>#175E52</td></tr>
+			<tr><td><span class="swatch" style="background:#ddf1e9"></span>Soft Mint</td><td>#DDF1E9</td><td><span class="swatch" style="background:#e8f5f0"></span>Pale Mint</td><td>#E8F5F0</td></tr>
+			<tr><td><span class="swatch" style="background:#faf8f2"></span>Warm Ivory</td><td>#FAF8F2</td><td><span class="swatch" style="background:#ffffff"></span>White Surface</td><td>#FFFFFF</td></tr>
+			<tr><td><span class="swatch" style="background:#243a34"></span>Forest Charcoal</td><td>#243A34</td><td><span class="swatch" style="background:#50645b"></span>Secondary Text</td><td>#50645B</td></tr>
+			<tr><td><span class="swatch" style="background:#e3e8e1"></span>Muted Border</td><td>#E3E8E1</td><td><span class="swatch" style="background:#e7a69a"></span>Muted Coral</td><td>#E7A69A</td></tr>
+		</tbody>
+	</table>
+	</div>
+	<ul>
+		<li><strong>Font sizes:</strong> Small, Body, Large, X-Large and Display. All but Small scale with the screen width.</li>
+		<li><strong>Spacing:</strong> six steps from 2XS to XL.</li>
+		<li><strong>Widths:</strong> content 720&nbsp;px, wide 1200&nbsp;px. Blocks can be aligned <em>Wide</em> or <em>Full width</em>.</li>
+	</ul>
+</div>
+</section>
+
+<!-- ============================================================ 14 -->
+<section class="doc" id="elementor">
+<div class="wrap">
+	<h2><span class="num">14</span>Elementor compatibility</h2>
+	<p>NexusForge works without any page builder. If you install Elementor, the theme steps aside where Elementor takes over and keeps providing the header, footer, fonts and colours everywhere else.</p>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Elementor page layout</th><th scope="col">Theme header &amp; footer</th><th scope="col">Use it for</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">Default</th><td>Shown</td><td>Regular pages inside the theme&rsquo;s content width.</td></tr>
+			<tr><th scope="row">Elementor Full Width</th><td>Shown</td><td>Edge-to-edge page designs that keep the site navigation.</td></tr>
+			<tr><th scope="row">Elementor Canvas</th><td>Hidden</td><td>Landing pages with no theme chrome at all.</td></tr>
+		</tbody>
+	</table>
+	</div>
+	<p>Set the layout in Elementor under <span class="path">Settings (gear icon) &rarr; Page Layout</span>.</p>
+	<ul>
+		<li><strong>Homepage:</strong> a static homepage built with Elementor replaces the starter sections automatically.</li>
+		<li><strong>Elementor Pro Theme Builder:</strong> the theme registers the standard header, footer, single and archive locations. When you publish a Theme Builder header or footer, it is used instead of the theme&rsquo;s own.</li>
+	</ul>
+	<div class="note note--warn">
+		<p><strong>Tested scope.</strong> The Full Width and Canvas layouts were verified with Elementor (free) in version 1.0.2 of the theme. The Elementor Pro Theme Builder integration is implemented but has not been tested on a licensed Pro installation.</p>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 15 -->
+<section class="doc" id="accessibility">
+<div class="wrap">
+	<h2><span class="num">15</span>Accessibility</h2>
+	<p>The theme is built to be usable with a keyboard and assistive technology. It targets WCAG 2.2 level AA but makes no formal conformance claim; what you add to the site (colours, images, content) also matters.</p>
+
+	<div class="fig-row">
+		<figure class="fig">
+			<a class="fig__img" href="assets/img/skip-link.png"><img src="assets/img/skip-link.png" width="760" height="200" loading="lazy" alt="The Skip to content link showing at the top left of the page after pressing Tab, marked 1."></a>
+			<figcaption><b>Figure 23.</b> Skip link.</figcaption>
+			<ol class="legend">
+				<li><b>Skip to content</b> &mdash; appears on the first press of <kbd>Tab</kbd> and jumps past the header. It sits below the admin bar when you are logged in.</li>
+			</ol>
+		</figure>
+		<figure class="fig">
+			<a class="fig__img" href="assets/img/focus-ring.png"><img src="assets/img/focus-ring.png" width="760" height="200" loading="lazy" alt="The About menu item with a dark focus ring around it, marked 1."></a>
+			<figcaption><b>Figure 24.</b> Focus indicator.</figcaption>
+			<ol class="legend">
+				<li><b>Focus ring</b> &mdash; a 3&nbsp;px outline on every link, button and form field reached by keyboard; white on dark areas such as the footer.</li>
+			</ol>
+		</figure>
+	</div>
+
+	<h3>Keyboard reference</h3>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Where</th><th scope="col">Key</th><th scope="col">What happens</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">Anywhere</th><td><kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>Move to the next / previous link, button or field.</td></tr>
+			<tr><th scope="row">Skip link</th><td><kbd>Enter</kbd></td><td>Jump to the main content.</td></tr>
+			<tr><th scope="row">Menu item with sub-items</th><td><kbd>Tab</kbd> onto it</td><td>Its dropdown opens; keep pressing <kbd>Tab</kbd> to move through the sub-items.</td></tr>
+			<tr><th scope="row">Submenu button</th><td><kbd>Enter</kbd> or <kbd>Space</kbd></td><td>Open or close the dropdown.</td></tr>
+			<tr><th scope="row">Inside a dropdown</th><td><kbd>Esc</kbd></td><td>Close it and return focus to its submenu button.</td></tr>
+			<tr><th scope="row">Menu button (small screens)</th><td><kbd>Enter</kbd> or <kbd>Space</kbd></td><td>Open the mobile menu; focus moves to the Close button.</td></tr>
+			<tr><th scope="row">Mobile menu open</th><td><kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>Cycle through the menu only; focus cannot leave it.</td></tr>
+			<tr><th scope="row">Mobile menu open</th><td><kbd>Esc</kbd></td><td>Close the menu and return focus to the menu button.</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<h3>Also built in</h3>
+	<ul>
+		<li>Landmarks for the header, navigation, main content and footer, and a level-one heading on every built-in template.</li>
+		<li>The current page is announced in the menu (<code>aria-current</code>), and submenu and menu buttons report whether they are expanded.</li>
+		<li>Labelled search and comment forms; primary buttons and form fields are at least 44&nbsp;px tall.</li>
+		<li>Animations are switched off for visitors who ask their device to reduce motion.</li>
+		<li>Decorative images and placeholders are hidden from screen readers.</li>
+	</ul>
+	<div class="note">
+		<p><strong>Your part.</strong> Add alternative text to images, keep heading levels in order, write descriptive link text, and check contrast after changing colours in the Customizer. When you build your own homepage, start it with one level-one heading (the Hero pattern includes one).</p>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 16 -->
+<section class="doc" id="translation">
+<div class="wrap">
+	<h2><span class="num">16</span>Translation</h2>
+	<p>Every piece of text in the theme can be translated. The text domain is <code>nexusforge</code> and the template file is <code>languages/nexusforge.pot</code>.</p>
+	<ol class="steps">
+		<li>Open <code>languages/nexusforge.pot</code> in a translation editor such as Poedit, or use a translation plugin such as Loco Translate.</li>
+		<li>Translate the strings and save the result as <code>nexusforge-{locale}.po</code> and <code>.mo</code> &mdash; for example <code>nexusforge-de_DE.mo</code> for German or <code>nexusforge-bn_BD.mo</code> for Bengali.</li>
+		<li>Place the files in <code>wp-content/languages/themes/</code> (they survive theme updates there).</li>
+		<li>Set the site language under <span class="path">Settings &rarr; General &rarr; Site Language</span>.</li>
+	</ol>
+	<div class="note">
+		<p><strong>Rewording built-in text.</strong> On a site that uses any language other than English (United States), a translation file is also a simple way to reword built-in text such as &ldquo;Book a call&rdquo; or the starter sections. WordPress does not load translation files for English (United States); on those sites change the wording in a <a href="#child-theme">child theme</a>.</p>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 17 -->
+<section class="doc" id="developers">
+<div class="wrap">
+	<h2><span class="num">17</span>Developer reference</h2>
+
+	<h3>File structure</h3>
+<div class="tree">nexusforge/
+├── style.css                  <span>Theme header only (no rules)</span>
+├── functions.php              <span>Loads the modules in inc/</span>
+├── theme.json                 <span>Editor palette, type, spacing, layout</span>
+├── header.php · footer.php    <span>Site chrome; defer to Elementor Pro when present</span>
+├── front-page.php · home.php · index.php · archive.php
+├── single.php · page.php · search.php · 404.php
+├── comments.php · searchform.php
+├── inc/
+│   ├── setup.php              <span>Theme supports, menus, image sizes, widget area</span>
+│   ├── enqueue.php            <span>Styles and scripts</span>
+│   ├── customizer.php         <span>Design System settings and sanitisation</span>
+│   ├── customizer-css.php     <span>Turns settings into validated CSS variables</span>
+│   ├── template-tags.php      <span>Pluggable output helpers</span>
+│   ├── template-functions.php <span>Body classes, menu fallback, helpers</span>
+│   ├── blocks.php             <span>Block styles and patterns</span>
+│   ├── elementor.php          <span>Loaded only when Elementor is active</span>
+│   └── class-nexusforge-walker-nav.php   <span>Adds submenu buttons</span>
+├── template-parts/
+│   ├── header/                <span>branding.php, navigation.php</span>
+│   ├── content/               <span>content.php, -single, -page, -search, -none</span>
+│   └── front/                 <span>hero, trust, services, process, testimonial, insights, cta</span>
+├── assets/
+│   ├── css/                   <span>fonts.css, tokens.css, main.css, blocks.css, editor.css</span>
+│   ├── js/                    <span>navigation.js, customizer-preview.js</span>
+│   └── fonts/                 <span>Manrope variable WOFF2 + licence</span>
+├── languages/nexusforge.pot
+└── docs/                      <span>This documentation</span></div>
+
+	<h3 id="design-tokens">Design tokens</h3>
+	<p>All colours, sizes and spacing come from CSS custom properties declared on <code>:root</code> in <code>assets/css/tokens.css</code>. Override any of them from a child theme or <span class="path">Customize &rarr; Additional CSS</span>.</p>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Token</th><th scope="col">Default</th><th scope="col">Used for</th></tr></thead>
+		<tbody>
+			<tr><td><code>--nexusforge-color-brand</code></td><td><span class="swatch" style="background:#287c70"></span>#287C70</td><td>Primary buttons, accents <em>(Customizer)</em></td></tr>
+			<tr><td><code>--nexusforge-color-brand-2</code></td><td><span class="swatch" style="background:#175e52"></span>#175E52</td><td>Links, hover states, small labels, call-to-action band</td></tr>
+			<tr><td><code>--nexusforge-color-canvas</code></td><td><span class="swatch" style="background:#faf8f2"></span>#FAF8F2</td><td>Page background <em>(Customizer)</em></td></tr>
+			<tr><td><code>--nexusforge-color-surface</code></td><td><span class="swatch" style="background:#ffffff"></span>#FFFFFF</td><td>Cards, dropdowns, mobile menu</td></tr>
+			<tr><td><code>--nexusforge-color-text</code></td><td><span class="swatch" style="background:#243a34"></span>#243A34</td><td>Text, headings, focus ring <em>(Customizer)</em></td></tr>
+			<tr><td><code>--nexusforge-color-text-2</code></td><td><span class="swatch" style="background:#50645b"></span>#50645B</td><td>Secondary text and meta</td></tr>
+			<tr><td><code>--nexusforge-color-border</code></td><td><span class="swatch" style="background:#e3e8e1"></span>#E3E8E1</td><td>Borders and dividers</td></tr>
+			<tr><td><code>--nexusforge-mint</code> / <code>-mint-pale</code></td><td><span class="swatch" style="background:#ddf1e9"></span>#DDF1E9 / <span class="swatch" style="background:#e8f5f0"></span>#E8F5F0</td><td>Tinted bands, tags, hover backgrounds</td></tr>
+			<tr><td><code>--nexusforge-ink</code></td><td><span class="swatch" style="background:#243a34"></span>#243A34</td><td>Footer background (follows the text colour control)</td></tr>
+			<tr><td><code>--nexusforge-fs-body</code></td><td>16 &ndash; 17&nbsp;px, fluid</td><td>Body text size <em>(Customizer)</em></td></tr>
+			<tr><td><code>--nexusforge-fs-h1</code> &hellip; <code>-h3</code>, <code>-display</code></td><td>Fluid <code>clamp()</code> values</td><td>Heading sizes</td></tr>
+			<tr><td><code>--nexusforge-content</code> / <code>--nexusforge-wide</code></td><td>720&nbsp;px / 1200&nbsp;px</td><td>Reading column / wide container <em>(wide: Customizer)</em></td></tr>
+			<tr><td><code>--nexusforge-radius-sm</code> / <code>-md</code> / <code>-lg</code></td><td>6 / 10 / 16&nbsp;px</td><td>Corner radii <em>(md: Customizer)</em></td></tr>
+			<tr><td><code>--nexusforge-space-1</code> &hellip; <code>-10</code></td><td>0.25 &ndash; 4&nbsp;rem</td><td>Spacing scale</td></tr>
+			<tr><td><code>--nexusforge-focus-ring</code></td><td>3&nbsp;px solid text colour</td><td>Keyboard focus outline</td></tr>
+		</tbody>
+	</table>
+	</div>
+	<p>Example &mdash; a darker footer and squarer cards, added under <span class="path">Customize &rarr; Additional CSS</span>:</p>
+<pre><code>:root {
+	--nexusforge-radius-lg: 8px;
+}
+.nexusforge-footer {
+	background: #14211d;
+}</code></pre>
+
+	<h3>Breakpoints</h3>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Width</th><th scope="col">Change</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">&le; 900&nbsp;px</th><td>Primary menu becomes the slide-in mobile menu; the menu button appears.</td></tr>
+			<tr><th scope="row">&le; 600&nbsp;px</th><td>Header action links are hidden; hero buttons become full width; the decorative hero circle is hidden.</td></tr>
+		</tbody>
+	</table>
+	</div>
+	<p>Grids use <code>auto-fit</code> columns, so cards reflow on their own without further breakpoints.</p>
+
+	<h3>Theme features registered</h3>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Feature</th><th scope="col">Details</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">Menus</th><td><code>primary</code> (Primary Menu), <code>footer</code> (Footer Menu)</td></tr>
+			<tr><th scope="row">Widget area</th><td><code>footer-1</code> (Footer)</td></tr>
+			<tr><th scope="row">Image sizes</th><td><code>nexusforge-card</code> 720&times;405 (cropped), <code>nexusforge-wide</code> 1280&times;640 (cropped)</td></tr>
+			<tr><th scope="row">Custom logo</th><td>180&times;48 suggested, flexible width and height</td></tr>
+			<tr><th scope="row">Custom header</th><td>1600&times;400 suggested, flexible; no header text, no video</td></tr>
+			<tr><th scope="row">Also supported</th><td>Custom background, post thumbnails, title tag, HTML5 markup, responsive embeds, wide alignment, editor styles, automatic feed links, selective refresh for widgets</td></tr>
+			<tr><th scope="row">Body classes</th><td><code>nexusforge</code> always; <code>hfeed</code> on list views; <code>no-footer-widgets</code> when the Footer area is empty</td></tr>
+		</tbody>
+	</table>
+	</div>
+	<div class="note">
+		<p>After activating the theme on a site that already has images, regenerate thumbnails (for example with the Regenerate Thumbnails plugin or <code>wp media regenerate</code>) so existing images get the two theme sizes.</p>
+	</div>
+
+	<h3>Hooks and pluggable functions</h3>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Purpose</th></tr></thead>
+		<tbody>
+			<tr><td><code>nexusforge_content_width</code></td><td>Filter</td><td>The global <code>$content_width</code> in pixels (default <code>1200</code>), used by WordPress for embeds and image sizing.</td></tr>
+			<tr><td><code>nexusforge_posted_on()</code></td><td>Pluggable</td><td>Prints the post date.</td></tr>
+			<tr><td><code>nexusforge_posted_by()</code></td><td>Pluggable</td><td>Prints the author link.</td></tr>
+			<tr><td><code>nexusforge_reading_time()</code></td><td>Pluggable</td><td>Returns the estimated reading time in minutes.</td></tr>
+			<tr><td><code>nexusforge_entry_meta()</code></td><td>Pluggable</td><td>Prints the category, date and reading-time line.</td></tr>
+			<tr><td><code>nexusforge_post_thumbnail()</code></td><td>Pluggable</td><td>Prints the featured image or the placeholder.</td></tr>
+			<tr><td><code>nexusforge_pagination()</code></td><td>Pluggable</td><td>Prints numbered pagination.</td></tr>
+		</tbody>
+	</table>
+	</div>
+	<p>&ldquo;Pluggable&rdquo; functions are wrapped in <code>function_exists()</code>: define a function with the same name in a child theme and yours is used instead. The standard WordPress hooks (<code>wp_head</code>, <code>wp_body_open</code>, <code>wp_footer</code>, <code>body_class</code>, <code>wp_nav_menu_*</code> and so on) are all available.</p>
+
+	<h3 id="child-theme">Using a child theme</h3>
+	<p>Make code changes in a child theme so they survive updates. Create a folder <code>wp-content/themes/nexusforge-child/</code> with these two files:</p>
+<pre><code>/* style.css */
+/*
+Theme Name: NexusForge Child
+Template:   nexusforge
+Version:    1.0.0
+*/
+
+:root {
+	--nexusforge-color-brand-2: #0f4c5c; /* links and hover states */
+}</code></pre>
+<pre><code>&lt;?php
+// functions.php
+add_action(
+	'wp_enqueue_scripts',
+	function () {
+		wp_enqueue_style(
+			'nexusforge-child',
+			get_stylesheet_uri(),
+			array( 'nexusforge-main' ),
+			wp_get_theme()-&gt;get( 'Version' )
+		);
+	},
+	20
+);</code></pre>
+	<p>Activate the child theme under <span class="path">Appearance &rarr; Themes</span>. Then:</p>
+	<ul>
+		<li><strong>Change a template</strong> &mdash; copy the file from the parent theme into the same path in the child theme and edit the copy. For example, copy <code>template-parts/header/navigation.php</code> to change or remove the <em>Sign in</em> and <em>Book a call</em> links, or <code>template-parts/front/hero.php</code> to rewrite the starter hero.</li>
+		<li><strong>Change the styling</strong> &mdash; add rules or token overrides to the child <code>style.css</code>.</li>
+	</ul>
+	<div class="note note--warn">
+		<p><strong>Order matters.</strong> The child stylesheet loads after the Customizer&rsquo;s values. If you override a token that a Customizer control also sets (brand, canvas, text, body size, wide width, medium radius), your CSS wins and that control appears to do nothing.</p>
+	</div>
+
+	<h3>Styles and scripts loaded on the front end</h3>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Handle</th><th scope="col">File</th><th scope="col">Notes</th></tr></thead>
+		<tbody>
+			<tr><td><code>nexusforge-fonts</code></td><td><code>assets/css/fonts.css</code></td><td>Local Manrope <code>@font-face</code></td></tr>
+			<tr><td><code>nexusforge-tokens</code></td><td><code>assets/css/tokens.css</code></td><td>Customizer values are added inline after this file</td></tr>
+			<tr><td><code>nexusforge-main</code></td><td><code>assets/css/main.css</code></td><td>Layout and components</td></tr>
+			<tr><td><code>nexusforge-blocks</code></td><td><code>assets/css/blocks.css</code></td><td>Block styles and header banner</td></tr>
+			<tr><td><code>nexusforge-navigation</code></td><td><code>assets/js/navigation.js</code></td><td>Footer, deferred, no dependencies</td></tr>
+		</tbody>
+	</table>
+	</div>
+</div>
+</section>
+
+<!-- ============================================================ 18 -->
+<section class="doc" id="troubleshooting">
+<div class="wrap">
+	<h2><span class="num">18</span>Troubleshooting &amp; FAQ</h2>
+
+	<details class="faq" open>
+		<summary>My menu does not appear in the header.</summary>
+		<div><p>The menu has not been assigned to a location. Go to <span class="path">Appearance &rarr; Menus</span>, open your menu, tick <strong>Primary Menu</strong> under Menu Settings and save. Until then the header lists your top-level pages.</p></div>
+	</details>
+	<details class="faq" open>
+		<summary>The homepage shows text I did not write.</summary>
+		<div><p>Those are the starter sections, shown while your static homepage is empty. Add your own content to the page and they are replaced. See <a href="#homepage">Homepage setup</a>.</p></div>
+	</details>
+	<details class="faq" open>
+		<summary>&ldquo;Book a call&rdquo; or &ldquo;Get started&rdquo; leads to a not-found page.</summary>
+		<div><p>These built-in buttons link to <code>/contact/</code> (and <em>Learn more</em> to <code>/about/</code>). Create pages with the slugs <code>contact</code> and <code>about</code>, and make sure <span class="path">Settings &rarr; Permalinks</span> is set to anything other than <em>Plain</em>.</p></div>
+	</details>
+	<details class="faq" open>
+		<summary>I changed a colour in the Customizer but the site looks the same.</summary>
+		<div><p>Click <strong>Publish</strong> in the Customizer, then clear any page cache or CDN cache and reload. If you use a child theme or Additional CSS that sets the same token, that CSS takes priority.</p></div>
+	</details>
+	<details class="faq" open>
+		<summary>The mobile menu button does nothing.</summary>
+		<div><p>The menu needs the theme&rsquo;s <code>navigation.js</code>. Optimisation plugins that combine, delay or remove JavaScript can stop it loading; exclude <code>navigation.js</code> from those features. Also check the browser console for errors from other plugins.</p></div>
+	</details>
+	<details class="faq" open>
+		<summary>My logo looks too small or too large.</summary>
+		<div><p>The header shows the logo at up to 48&nbsp;px tall. For a different height add this under <span class="path">Customize &rarr; Additional CSS</span>, changing the number as needed:</p>
+<pre><code>.nexusforge-branding img { max-height: 64px; }</code></pre></div>
+	</details>
+	<details class="faq" open>
+		<summary>Featured images look blurry or oddly cropped.</summary>
+		<div><p>Upload images at least 1280&nbsp;px wide. Featured images are displayed at 16:9 and cropped from the centre, so keep the subject away from the edges. Images uploaded before the theme was activated need their thumbnails regenerated.</p></div>
+	</details>
+	<details class="faq" open>
+		<summary>How do I remove &ldquo;Sign in&rdquo; from the header?</summary>
+		<div><p>Use a <a href="#child-theme">child theme</a> and copy <code>template-parts/header/navigation.php</code> into it, then delete the link. For a quick fix without code files, hide it with Additional CSS:</p>
+<pre><code>.nexusforge-signin { display: none; }</code></pre></div>
+	</details>
+	<details class="faq" open>
+		<summary>Can I use a different font?</summary>
+		<div><p>Yes. Load your font (for example with a font plugin or from a child theme) and set the token:</p>
+<pre><code>:root { --nexusforge-font: "Your Font", sans-serif; }</code></pre></div>
+	</details>
+	<details class="faq" open>
+		<summary>Does the theme need Elementor?</summary>
+		<div><p>No. Every page works with Elementor absent or deactivated.</p></div>
+	</details>
+	<details class="faq" open>
+		<summary>Does the theme collect data or load anything from other servers?</summary>
+		<div><p>No. Fonts, styles and scripts are all served from your own site.</p></div>
+	</details>
+</div>
+</section>
+
+<!-- ============================================================ 19 -->
+<section class="doc" id="credits">
+<div class="wrap">
+	<h2><span class="num">19</span>Changelog, licence &amp; credits</h2>
+
+	<h3>Changelog</h3>
+	<p>The full history is in <code>readme.txt</code> in the theme folder. Highlights of version 1.0.4:</p>
+	<ul>
+		<li>Mobile menu rebuilt as a focus-trapped dialog with a Close button and a neutral overlay.</li>
+		<li>Skip link no longer overlaps the WordPress admin bar.</li>
+		<li>Visible focus indicators on every interactive element; dropdowns keyboard-operable to three levels.</li>
+		<li>Customizer values validated again when the stylesheet is generated.</li>
+		<li>Homepages built with blocks now use the full width, and <em>Wide</em> alignment works on pages and posts.</li>
+		<li>Block editor canvas now uses the theme&rsquo;s font and colours; this documentation added.</li>
+	</ul>
+
+	<h3>Licence</h3>
+	<p>NexusForge is distributed under the GNU General Public License, version 2 or later. You may use it on any number of sites, modify it and redistribute it under the same licence. This documentation and its screenshots are part of the theme and carry the same licence.</p>
+
+	<h3>Bundled resources</h3>
+	<div class="table-wrap">
+	<table>
+		<thead><tr><th scope="col">Resource</th><th scope="col">Licence</th><th scope="col">Location</th></tr></thead>
+		<tbody>
+			<tr><th scope="row">Manrope typeface, &copy; 2019 The Manrope Project Authors</th><td>SIL Open Font License 1.1</td><td><code>assets/fonts/</code> (licence text included)</td></tr>
+			<tr><th scope="row">Lucide-style inline SVG icons</th><td>ISC</td><td>Inline in the starter sections</td></tr>
+		</tbody>
+	</table>
+	</div>
+
+	<h3>Support</h3>
+	<p>For help, use the theme&rsquo;s support forum on WordPress.org. When reporting a problem please include your WordPress and PHP versions, the theme version (shown under <span class="path">Appearance &rarr; Themes &rarr; Theme Details</span>), a list of active plugins, and the steps that lead to the problem.</p>
+</div>
+</section>
+
+<footer class="footer">
+	<div class="wrap">
+		<p>NexusForge theme documentation &middot; version 1.0.4 &middot; GPL v2 or later.</p>
+	</div>
+</footer>
+
+</main>
+</div>
+</body>
+</html>

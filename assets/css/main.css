@@ -26,6 +26,8 @@ body {
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 	overflow-wrap: break-word;
+	/* Full-width (100vw) blocks must never add a horizontal scrollbar. */
+	overflow-x: clip;
 }
 
 img,
@@ -684,6 +686,46 @@ select:focus {
 .entry-content { max-width: var(--nexusforge-measure); }
 .entry-content > * { margin-left: auto; margin-right: auto; }
 
+/* Breathing room around layout blocks; back-to-back full-width bands touch. */
+.entry-content > :is(.wp-block-group, .wp-block-columns, .wp-block-cover, .wp-block-media-text) + *,
+.entry-content > * + :is(.wp-block-group, .wp-block-columns, .wp-block-cover, .wp-block-media-text) { margin-top: var(--nexusforge-space-6); }
+.entry-content > .alignfull + .alignfull { margin-top: 0; }
+
+/* "Wide" blocks break out of the reading column up to the wide container. */
+.entry-content > .alignwide {
+	width: min(100vw - 2 * var(--nexusforge-gutter), var(--nexusforge-wide));
+	max-width: none;
+	margin-left: 50%;
+	transform: translateX(-50%);
+}
+
+/* ---- Static homepage built with blocks or a page builder ----------------
+   The front page is a full-width canvas: regular blocks sit in the reading
+   column, "wide" blocks in the wide container, "full" blocks edge to edge. */
+.nexusforge-front.nexusforge-main { padding-block: 0; }
+
+.nexusforge-front > .entry-content { max-width: none; }
+
+.nexusforge-front > .entry-content > * {
+	width: min(100% - 2 * var(--nexusforge-gutter), var(--nexusforge-content));
+	max-width: none;
+	margin-left: auto;
+	margin-right: auto;
+	transform: none;
+}
+
+.nexusforge-front > .entry-content > .alignwide { width: min(100% - 2 * var(--nexusforge-gutter), var(--nexusforge-wide)); }
+
+.nexusforge-front > .entry-content > .alignfull,
+.nexusforge-front > .entry-content > .elementor {
+	width: 100%;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.nexusforge-front > .entry-content > :first-child:not(.alignfull):not(.elementor) { margin-top: var(--nexusforge-section-y); }
+.nexusforge-front > .entry-content > :last-child:not(.alignfull):not(.elementor) { margin-bottom: var(--nexusforge-section-y); }
+
 .nexusforge-archive-header {
 	padding: var(--nexusforge-space-5) var(--nexusforge-space-6);
 	background: var(--nexusforge-mint-pale);
@@ -752,8 +794,19 @@ select:focus {
 .nexusforge-footer__brand .nexusforge-branding a { color: var(--nexusforge-white); }
 .nexusforge-footer__brand .nexusforge-dot { color: var(--nexusforge-coral); }
 
+/* Headings inside the dark footer must not inherit the dark heading colour. */
+.nexusforge-footer h1,
+.nexusforge-footer h2,
+.nexusforge-footer h3,
+.nexusforge-footer h4,
+.nexusforge-footer h5,
+.nexusforge-footer h6 { color: var(--nexusforge-white); }
+
+/* Widget titles (classic and block widgets) match the footer column titles. */
 .nexusforge-footer .widget-title,
-.nexusforge-footer__col-title {
+.nexusforge-footer .widget > .wp-block-heading,
+.nexusforge-footer .widget > .wp-block-group > .wp-block-heading,
+.nexusforge-footer .nexusforge-footer__col-title {
 	font-size: 0.8125rem;
 	font-weight: 700;
 	letter-spacing: 0.08em;

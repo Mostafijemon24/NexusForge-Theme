@@ -27,6 +27,14 @@ integrated at the code level but are NOT independently runtime-verified in this 
 3. Set menus under Appearance → Menus (locations: Primary, Footer).
 4. Adjust design tokens under Appearance → Customize → NexusForge — Design System.
 
+== Documentation ==
+
+A full illustrated user guide ships with the theme. Open `docs/index.html` from the theme
+folder in any web browser (it works offline and loads nothing from other servers). It
+covers installation, menus, the homepage, the Design System controls, the footer, block
+styles and patterns, Elementor, accessibility, translation, a developer reference and
+troubleshooting, with numbered screenshots throughout.
+
 == Frequently Asked Questions ==
 
 = Does it require Elementor? =
@@ -73,6 +81,21 @@ Addresses the three items raised in the WordPress.org theme review of 1.0.3.
 * Accessibility extras found while re-testing: the search results template now has a
   level-one heading; the starter "trusted by" names use the secondary text colour
   (contrast 2.5:1 -> 6.4:1) and the process step numbers use deep teal (4.45:1 -> 7:1+).
+* Documentation: added an illustrated, offline user guide at `docs/index.html` with
+  numbered screenshots (see the Documentation section above). `screenshot.png` was
+  retaken from the theme itself so it shows the current NexusForge name and typeface.
+* Fixes found while documenting the theme:
+  * A static homepage built with blocks (or a page builder) is now a full-width canvas:
+    regular blocks sit in the reading column, Wide blocks in the wide container and Full
+    width blocks edge to edge. Previously the content was held in a narrow column at the
+    left edge. Wide alignment now also works on pages and posts.
+  * Headings in footer widgets were dark on the dark footer and could not be read; they
+    now use the footer column-title style.
+  * The block editor canvas now loads the theme font, design tokens and block styles, so
+    it matches the front end.
+  * The "Call to action band" pattern button is now a white pill (it blended into the
+    band), and the theme's button style is labelled "Brand Outline" so it is no longer
+    listed as a second "Outline" next to the core style.
 * Other: native submit buttons (e.g. the comment form) are styled as theme buttons with a
   44px target; the page-list menu fallback is limited to top-level pages; the translation
   template (`languages/nexusforge.pot`) was regenerated.

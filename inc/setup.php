@@ -24,7 +24,19 @@ function nexusforge_setup() {
 	add_theme_support( 'wp-block-styles' );
 	add_theme_support( 'appearance-tools' );
 	add_theme_support( 'editor-styles' );
-	add_editor_style( 'assets/css/editor.css' );
+	/*
+	 * Editor styles are loaded inside the block editor canvas (an iframe), so
+	 * the fonts, design tokens and block styles are listed here too — otherwise
+	 * the canvas cannot resolve the custom properties editor.css relies on.
+	 */
+	add_editor_style(
+		array(
+			'assets/css/fonts.css',
+			'assets/css/tokens.css',
+			'assets/css/blocks.css',
+			'assets/css/editor.css',
+		)
+	);
 
 	add_theme_support(
 		'html5',

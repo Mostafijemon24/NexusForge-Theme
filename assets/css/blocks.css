@@ -7,7 +7,8 @@
 /* Button — Outline */
 .wp-block-button.is-style-nexusforge-outline > .wp-block-button__link {
 	background-color: transparent;
-	color: var(--nexusforge-color-brand, #287c70);
+	/* Deep teal text: brand teal is 4.45:1 on the pale mint panel (below WCAG AA). */
+	color: var(--nexusforge-color-brand-2, #175e52);
 	border: 2px solid var(--nexusforge-color-brand, #287c70);
 }
 .wp-block-button.is-style-nexusforge-outline > .wp-block-button__link:hover,
