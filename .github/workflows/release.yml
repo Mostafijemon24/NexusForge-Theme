@@ -7,8 +7,17 @@ name: Release
 #   1. Actions tab -> Release -> "Run workflow". The version is read from
 #      style.css and the release tag (for example v1.0.4) is created for you.
 #   2. Push a tag such as v1.0.4 yourself. It must match the style.css version.
+#
+# A version is released once. To publish the same version again from newer
+# code, start the workflow from the Actions tab and tick "Replace the existing
+# release": the old release and its tag are deleted and recreated.
 on:
   workflow_dispatch:
+    inputs:
+      replace_existing:
+        description: Replace the existing release of this version
+        type: boolean
+        default: false
   push:
     tags:
       - 'v*'
@@ -41,11 +50,26 @@ jobs:
       - name: Stop if this version is already released
         env:
           GH_TOKEN: ${{ github.token }}
+          REPLACE_EXISTING: ${{ inputs.replace_existing }}
         run: |
-          if gh release view "$TAG" > /dev/null 2>&1; then
-            echo "Release $TAG already exists. Bump the version in style.css, functions.php and readme.txt first." >&2
+          if ! gh release view "$TAG" > /dev/null 2>&1; then
+            exit 0
+          fi
+          if [ "$REPLACE_EXISTING" != "true" ]; then
+            echo "Release $TAG already exists. Bump the version in style.css, functions.php and readme.txt first, or run the workflow with \"Replace the existing release\" ticked." >&2
             exit 1
           fi
+          echo "Replacing the existing release $TAG."
+          gh release delete "$TAG" --cleanup-tag --yes
+          # Wait for the tag to be gone so the new release can recreate it.
+          for attempt in 1 2 3 4 5 6 7 8 9 10; do
+            if [ -z "$(git ls-remote --tags origin "refs/tags/$TAG")" ]; then
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "Tag $TAG is still present after deleting the release." >&2
+          exit 1
 
       - name: Build the theme ZIP
         run: |

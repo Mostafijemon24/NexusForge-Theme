@@ -234,7 +234,7 @@ To publish a release:
 1. Update the version in `style.css`, `functions.php` (`NEXUSFORGE_VERSION`) and `readme.txt` (`Stable tag` and a changelog entry), then commit and push to `main`.
 2. On GitHub open **Actions → Release → Run workflow**.
 
-The [release workflow](.github/workflows/release.yml) reads the version from `style.css`, builds `nexusforge-<version>.zip` with `git archive`, creates the matching `v<version>` tag and publishes a release with the ZIP and the PDF guide attached. The release notes are taken from that version's entry in `readme.txt`. It stops if that version has already been released.
+The [release workflow](.github/workflows/release.yml) reads the version from `style.css`, builds `nexusforge-<version>.zip` with `git archive`, creates the matching `v<version>` tag and publishes a release with the ZIP and the PDF guide attached. The release notes are taken from that version's entry in `readme.txt`. It stops if that version has already been released, unless you tick **Replace the existing release** when starting it, which deletes that release and its tag and publishes them again from the current code.
 
 Pushing a `v<version>` tag by hand starts the same workflow.
 
