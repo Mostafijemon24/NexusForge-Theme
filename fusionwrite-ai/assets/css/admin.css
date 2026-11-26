@@ -1263,6 +1263,11 @@ body.fswrt-fullscreen #wpbody {
 	inset: 0;
 }
 
+.fw-tour-card,
+.fw-tour-card * {
+	box-sizing: border-box;
+}
+
 .fw-tour-card {
 	position: fixed;
 	z-index: 100021;

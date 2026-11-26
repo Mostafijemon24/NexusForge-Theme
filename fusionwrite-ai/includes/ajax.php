@@ -28,12 +28,12 @@ function fswrt_ajax_guard() {
  * Read a text field from the request.
  *
  * @param string $name    Field name.
- * @param string $default Value when the field is missing.
+ * @param string $fallback Value when the field is missing.
  * @return string
  */
-function fswrt_post_text( $name, $default = '' ) {
+function fswrt_post_text( $name, $fallback = '' ) {
 	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Every caller runs fswrt_ajax_guard() first.
-	return isset( $_POST[ $name ] ) ? sanitize_text_field( wp_unslash( $_POST[ $name ] ) ) : $default;
+	return isset( $_POST[ $name ] ) ? sanitize_text_field( wp_unslash( $_POST[ $name ] ) ) : $fallback;
 }
 
 /**

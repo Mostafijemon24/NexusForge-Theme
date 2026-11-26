@@ -234,9 +234,9 @@ function fswrt_migrate_legacy_settings() {
 		return $settings;
 	}
 
-	$settings['providers']['openai']['key']  = $openai;
-	$settings['providers']['gemini']['key']  = $gemini;
-	$settings['images']['stability_key']     = $stability;
+	$settings['providers']['openai']['key'] = $openai;
+	$settings['providers']['gemini']['key'] = $gemini;
+	$settings['images']['stability_key']    = $stability;
 	if ( '' !== $openai ) {
 		$settings['images']['engine'] = 'openai';
 		$settings['images']['count']  = 3;
