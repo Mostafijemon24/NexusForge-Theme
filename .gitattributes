@@ -5,6 +5,9 @@
 /.gitignore     export-ignore
 /README.md      export-ignore
 
+# The FusionWrite AI plugin is developed here but is not part of the theme.
+/fusionwrite-ai export-ignore
+
 # Keep line endings consistent.
 * text=auto eol=lf
 *.png   binary
