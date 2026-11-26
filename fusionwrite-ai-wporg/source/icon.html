@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8"><style>*{margin:0;padding:0}body{width:256px;height:256px;overflow:hidden;background:#0B3E96}canvas{display:block;width:256px;height:256px}</style></head>
+<body><canvas id="c" width="1024" height="1024"></canvas><script>
+// The icon is drawn in a 256-unit space and is a pure function of t in [0,1), so it loops cleanly.
+function rng(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+const TAU=Math.PI*2, c=document.getElementById('c').getContext('2d'); c.scale(4,4);
+const r=rng(11);
+const traces=[]; for(let i=0;i<14;i++){const left=r()<.6; traces.push({x:left?6+r()*70:150+r()*90,y:left?70+r()*180:200+r()*50,len:30+r()*70,bend:(r()<.5?-1:1)*(8+r()*14),ph:r()})}
+const globe=[]; for(let i=0;i<70;i++){const a=r()*TAU,d=Math.sqrt(r())*44;globe.push({x:204+Math.cos(a)*d,y:54+Math.sin(a)*d*.9,ph:r(),k:1+Math.floor(r()*2),s:.7+r()*1.1})}
+const dust=[]; for(let i=0;i<34;i++)dust.push({ph:r(),off:r()*2-1,k:1+Math.floor(r()*2),s:.8+r()*1.7,w:r()});
+const W='M96 116 C99 144 104 180 113 180 C123 180 125 138 133 138 C141 138 143 180 153 180 C164 180 171 142 178 108';
+const wPath=new Path2D(W);
+function rr(x,y,w,h,rad){const p=new Path2D();p.roundRect(x,y,w,h,rad);return p}
+function star(x,y,s,a,col){c.save();c.translate(x,y);c.globalAlpha=a;c.fillStyle=col;c.shadowColor=col;c.shadowBlur=6;c.beginPath();for(let i=0;i<8;i++){const q=i%2?s*.18:s,an=i*TAU/8;c.lineTo(Math.cos(an)*q,Math.sin(an)*q)}c.closePath();c.fill();c.restore()}
+window.renderFrame=function(t){
+  c.clearRect(0,0,256,256); c.globalCompositeOperation='source-over'; c.shadowBlur=0; c.globalAlpha=1;
+  // background: the old icon's blue-to-purple field with circuit traces and a dotted globe
+  let g=c.createLinearGradient(0,40,256,216);g.addColorStop(0,'#0A47A6');g.addColorStop(.5,'#4A3BB4');g.addColorStop(1,'#A22BC4');c.fillStyle=g;c.fillRect(0,0,256,256);
+  g=c.createRadialGradient(214,40,0,214,40,150);g.addColorStop(0,'rgba(220,120,255,.38)');g.addColorStop(1,'rgba(220,120,255,0)');c.fillStyle=g;c.fillRect(0,0,256,256);
+  c.lineWidth=.9;c.lineCap='round';
+  traces.forEach(tr=>{c.strokeStyle='rgba(170,200,255,.20)';c.beginPath();c.moveTo(tr.x,tr.y);c.lineTo(tr.x+tr.len*.5,tr.y);c.lineTo(tr.x+tr.len*.5+Math.abs(tr.bend),tr.y+tr.bend);c.lineTo(tr.x+tr.len,tr.y+tr.bend);c.stroke();c.fillStyle='rgba(190,215,255,.34)';c.beginPath();c.arc(tr.x,tr.y,1.5,0,TAU);c.fill()});
+  globe.forEach(n=>{c.fillStyle='rgba(215,225,255,'+(.16+.34*(.5+.5*Math.sin(TAU*(t*n.k+n.ph))))+')';c.beginPath();c.arc(n.x,n.y,n.s,0,TAU);c.fill()});
+  // the tile
+  const tile=rr(36,36,184,184,44);
+  c.save();c.shadowColor='rgba(8,6,50,.55)';c.shadowBlur=26;c.shadowOffsetY=10;g=c.createLinearGradient(36,36,220,220);g.addColorStop(0,'#111A55');g.addColorStop(1,'#2B1268');c.fillStyle=g;c.fill(tile);c.restore();
+  c.save();c.clip(tile);g=c.createRadialGradient(92,84,0,92,84,150);g.addColorStop(0,'rgba(70,150,255,.34)');g.addColorStop(1,'rgba(70,150,255,0)');c.fillStyle=g;c.fillRect(36,36,184,184);
+  g=c.createRadialGradient(190,196,0,190,196,120);g.addColorStop(0,'rgba(190,90,255,.30)');g.addColorStop(1,'rgba(190,90,255,0)');c.fillStyle=g;c.fillRect(36,36,184,184);c.restore();
+  g=c.createLinearGradient(36,36,220,220);g.addColorStop(0,'rgba(150,215,255,.75)');g.addColorStop(.5,'rgba(150,170,255,.18)');g.addColorStop(1,'rgba(225,150,255,.6)');c.strokeStyle=g;c.lineWidth=1.6;c.stroke(tile);
+  // the W ribbon
+  const wg=c.createLinearGradient(92,0,186,0);wg.addColorStop(0,'#49EBFF');wg.addColorStop(.45,'#5E93FF');wg.addColorStop(.8,'#B487FF');wg.addColorStop(1,'#EBA8FF');
+  c.lineCap='round';c.lineJoin='round';
+  c.save();c.shadowColor='rgba(90,190,255,.9)';c.shadowBlur=16;c.strokeStyle=wg;c.lineWidth=15;c.stroke(wPath);c.restore();
+  c.save();c.globalAlpha=.55;c.strokeStyle='#FFFFFF';c.lineWidth=2.2;c.translate(-2.2,-2.6);c.stroke(wPath);c.restore();
+  // a band of light travelling along the ribbon
+  c.save();c.globalCompositeOperation='lighter';c.shadowColor='#FFFFFF';c.shadowBlur=10;c.strokeStyle='rgba(255,255,255,.85)';c.lineWidth=9;const L=330;c.setLineDash([26,L]);c.lineDashOffset=-(t*(L+26))+26;c.stroke(wPath);c.restore();
+  // the right arm dissolves into particles
+  c.save();c.globalCompositeOperation='lighter';
+  dust.forEach(p=>{const u=(p.ph+t*p.k)%1,x=178+u*24+p.off*(4+u*16),y=108-u*58+p.off*4*Math.sin(u*9),a=Math.sin(Math.PI*u)*(.5+.5*p.w);
+    const col=u<.5?'rgba(190,150,255,':'rgba(240,180,255,';c.shadowColor=col+'1)';c.shadowBlur=5;c.fillStyle=col+a+')';c.beginPath();c.arc(x,y,p.s*(1-u*.4),0,TAU);c.fill()});
+  c.restore();
+  // the nib, at the start of the W
+  c.save();c.translate(80.3,97.3);c.rotate(140*Math.PI/180);c.scale(.72,.72);
+  const nib=new Path2D('M-12 -30 Q-12 -35 -7 -35 L7 -35 Q12 -35 12 -30 L14.5 -10 C17 5 8 32 0 54 C-8 32 -17 5 -14.5 -10 Z');
+  c.shadowColor='rgba(120,230,255,.95)';c.shadowBlur=14;g=c.createLinearGradient(-14,-30,14,40);g.addColorStop(0,'#FFFFFF');g.addColorStop(.55,'#BDEBFF');g.addColorStop(1,'#6FC8FF');c.fillStyle=g;c.fill(nib);
+  c.shadowBlur=0;c.strokeStyle='#12205E';c.lineWidth=2.6;c.lineCap='round';c.beginPath();c.moveTo(-10.5,-23);c.lineTo(10.5,-23);c.stroke();c.beginPath();c.moveTo(0,4);c.lineTo(0,42);c.stroke();c.fillStyle='#12205E';c.beginPath();c.arc(0,0,4.6,0,TAU);c.fill();c.restore();
+  // sparkles
+  const v=.5+.5*Math.sin(TAU*t), v2=.5+.5*Math.sin(TAU*(t+.37)), v3=.5+.5*Math.sin(TAU*(2*t+.6));
+  star(58,70,5+6*v,.35+.65*v,'#FFFFFF');star(196,70,4+5*v2,.3+.7*v2,'#F2D9FF');star(170,196,3+4*v3,.25+.6*v3,'#BFEFFF');
+};
+renderFrame(0.3);
+</script></body></html>

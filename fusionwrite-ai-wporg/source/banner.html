@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:"Instrument Sans";src:url(font.woff2) format("woff2");font-weight:400 700}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1544px;height:500px;overflow:hidden;background:#06408F}
+.b{position:relative;width:1544px;height:500px;overflow:hidden;font-family:"Instrument Sans",sans-serif;color:#fff;background:url(banner-base.png) 0 0/1544px 500px}
+canvas{position:absolute;inset:0;width:1544px;height:500px}
+.copy{position:absolute;left:724px;top:0;width:780px;height:500px;display:flex;flex-direction:column;justify-content:center}
+h1{font-size:96px;font-weight:700;letter-spacing:-.035em;line-height:1;
+  background:linear-gradient(180deg,#FFFFFF 30%,#D9E4FF 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 18px rgba(20,10,80,.55))}
+.tag{margin-top:20px;font-size:35px;font-weight:500;letter-spacing:-.012em;line-height:1.28;color:#F1F3FF;text-shadow:0 2px 14px rgba(20,10,80,.5)}
+.chips{display:flex;gap:10px;margin-top:30px}
+.chip{padding:8px 17px;border-radius:999px;border:1.5px solid rgba(255,255,255,.34);background:rgba(255,255,255,.12);font-size:20px;font-weight:600;color:#fff;white-space:nowrap}
+.chip.free{border-color:transparent;background:linear-gradient(135deg,#5BE7FF,#7C8CFF);color:#0B1250}
+</style></head><body><div class="b">
+<canvas id="under" width="1544" height="500"></canvas>
+<div class="copy">
+  <h1>FusionWrite AI</h1>
+  <p class="tag">Boost your writing workflow<br>with artificial intelligence.</p>
+  <div class="chips"><span class="chip">OpenRouter</span><span class="chip">Gemini</span><span class="chip">Groq</span><span class="chip">OpenAI</span><span class="chip free">Free models</span></div>
+</div>
+<canvas id="over" width="1544" height="500"></canvas>
+</div>
+<script>
+// Everything is a pure function of t in [0,1), so the animation loops without a seam.
+function rng(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+const TAU=Math.PI*2;
+const under=document.getElementById('under').getContext('2d'), over=document.getElementById('over').getContext('2d');
+
+// --- behind the text: circuit traces and a faint network, as in the old banner
+const r1=rng(7);
+const traces=[]; for(let i=0;i<16;i++){const y=24+r1()*452, x0=700+r1()*520, len=120+r1()*360, bend=(r1()<.5?-1:1)*(14+r1()*30), bx=x0+len*(.3+r1()*.4); traces.push({y,x0,len,bend,bx,ph:r1()})}
+const nodes=[]; const cx=1235, cy=250; for(let i=0;i<46;i++){const a=r1()*TAU, d=Math.sqrt(r1()); nodes.push({x:cx+Math.cos(a)*d*250, y:cy+Math.sin(a)*d*205, r:1.6+r1()*2.6, ph:r1(), k:1+Math.floor(r1()*2)})}
+const links=[]; for(let i=0;i<nodes.length;i++){const near=nodes.map((n,j)=>({j,d:Math.hypot(n.x-nodes[i].x,n.y-nodes[i].y)})).filter(o=>o.j!==i).sort((a,b)=>a.d-b.d).slice(0,2); near.forEach(o=>{if(o.d<120&&i<o.j)links.push([i,o.j])})}
+function drawUnder(t){
+  const c=under; c.clearRect(0,0,1544,500); c.lineCap='round';
+  traces.forEach(tr=>{c.strokeStyle='rgba(190,205,255,.10)';c.lineWidth=1.3;c.beginPath();c.moveTo(tr.x0,tr.y);c.lineTo(tr.bx,tr.y);c.lineTo(tr.bx+Math.abs(tr.bend),tr.y+tr.bend);c.lineTo(tr.x0+tr.len,tr.y+tr.bend);c.stroke();
+    c.fillStyle='rgba(200,215,255,.20)';c.beginPath();c.arc(tr.x0,tr.y,2.4,0,TAU);c.fill();c.beginPath();c.arc(tr.x0+tr.len,tr.y+tr.bend,2.4,0,TAU);c.fill();
+    // a small pulse of light running along each trace
+    const u=(t+tr.ph)%1, px=tr.x0+tr.len*u, py=px<tr.bx?tr.y:(px<tr.bx+Math.abs(tr.bend)?tr.y+(px-tr.bx)*Math.sign(tr.bend):tr.y+tr.bend);
+    const g=c.createRadialGradient(px,py,0,px,py,16);g.addColorStop(0,'rgba(170,235,255,'+(.5*Math.sin(Math.PI*u))+')');g.addColorStop(1,'rgba(170,235,255,0)');c.fillStyle=g;c.beginPath();c.arc(px,py,16,0,TAU);c.fill()});
+  c.strokeStyle='rgba(205,190,255,.13)';c.lineWidth=1;links.forEach(([i,j])=>{c.beginPath();c.moveTo(nodes[i].x,nodes[i].y);c.lineTo(nodes[j].x,nodes[j].y);c.stroke()});
+  nodes.forEach(n=>{const a=.14+.16*(.5+.5*Math.sin(TAU*(t*n.k+n.ph)));c.fillStyle='rgba(215,205,255,'+a+')';c.beginPath();c.arc(n.x,n.y,n.r,0,TAU);c.fill()});
+}
+
+// --- over the pen: particles flowing up the stream, sparkles, a glint on the nib
+const P=[[236,318],[372,262],[470,150],[648,140]];
+function bez(u){const m=1-u;return[m*m*m*P[0][0]+3*m*m*u*P[1][0]+3*m*u*u*P[2][0]+u*u*u*P[3][0],m*m*m*P[0][1]+3*m*m*u*P[1][1]+3*m*u*u*P[2][1]+u*u*u*P[3][1]]}
+const r2=rng(21);
+const flow=[]; for(let i=0;i<120;i++)flow.push({ph:r2(),off:(r2()*2-1),k:1+Math.floor(r2()*2),sz:.9+r2()*2.1,w:r2()});
+const stars=[]; [[516,96],[574,70],[622,84],[640,160],[596,196],[566,236],[478,140],[430,190],[388,150],[356,214],[664,120],[540,150]].forEach(p=>stars.push({x:p[0],y:p[1],s:5+r2()*9,ph:r2(),k:1+Math.floor(r2()*2)}));
+function star(c,x,y,s,a,col){c.save();c.translate(x,y);c.globalAlpha=a;c.fillStyle=col;c.shadowColor=col;c.shadowBlur=14;c.beginPath();for(let i=0;i<8;i++){const r=i%2?s*.16:s,an=i*TAU/8;c.lineTo(Math.cos(an)*r,Math.sin(an)*r)}c.closePath();c.fill();c.restore()}
+function drawOver(t){
+  const c=over; c.clearRect(0,0,1544,500); c.globalCompositeOperation='lighter';
+  flow.forEach(p=>{const u=(p.ph+t*p.k)%1,[x,y]=bez(u),[x2,y2]=bez(Math.min(1,u+.01));const dx=x2-x,dy=y2-y,l=Math.hypot(dx,dy)||1,spread=10+u*78;
+    const px=x-dy/l*p.off*spread, py=y+dx/l*p.off*spread, a=Math.sin(Math.PI*u)*(.55+.45*p.w);
+    const col=u<.55?'rgba(120,235,255,':'rgba(196,160,255,';c.shadowColor=col+'1)';c.shadowBlur=10;c.fillStyle=col+a+')';c.beginPath();c.arc(px,py,p.sz,0,TAU);c.fill()});
+  c.shadowBlur=0;
+  stars.forEach(s=>{const v=.5+.5*Math.sin(TAU*(t*s.k+s.ph));star(c,s.x,s.y,s.s*(.45+.75*v),.15+.85*v,s.x>540?'#E2CCFF':'#C9F4FF')});
+  // glint on the metal nib and the pool of light under it
+  const v=.5+.5*Math.sin(TAU*t);star(c,121,398,10+12*v,.35+.65*v,'#FFFFFF');
+  const g=c.createRadialGradient(176,438,0,176,438,150);g.addColorStop(0,'rgba(90,190,255,'+(.10+.14*v)+')');g.addColorStop(1,'rgba(90,190,255,0)');c.save();c.scale(1,.16);c.fillStyle=g;c.beginPath();c.arc(176,438/.16,150,0,TAU);c.fill();c.restore();
+  c.globalCompositeOperation='source-over';
+}
+window.renderFrame=t=>{drawUnder(t);drawOver(t)};
+renderFrame(0.2);
+</script></body></html>
