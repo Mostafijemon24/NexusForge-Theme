@@ -3,7 +3,7 @@
  * Plugin Name: FusionWrite AI
  * Plugin URI: https://mostafijemon.com/fusionwrite-ai
  * Description: Write blog posts with AI from a focused, full-page workspace. Works with OpenRouter, Google Gemini, Groq, OpenAI and any OpenAI-compatible API, including free ones.
- * Version: 2.0.0
+ * Version: 2.0.2
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: Mostafij Emon
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FSWRT_VERSION', '2.0.0' );
+define( 'FSWRT_VERSION', '2.0.2' );
 define( 'FSWRT_FILE', __FILE__ );
 define( 'FSWRT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'FSWRT_URL', plugin_dir_url( __FILE__ ) );

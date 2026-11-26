@@ -125,13 +125,8 @@ body.fswrt-fullscreen #wpbody {
 	text-decoration: none;
 }
 
-.fw-mark-a {
-	fill: var(--fw-ink);
-}
-
-.fw-mark-b {
-	fill: var(--fw-accent);
-	opacity: 0.88;
+.fw-mark {
+	flex: none;
 }
 
 .fw-nav ul {

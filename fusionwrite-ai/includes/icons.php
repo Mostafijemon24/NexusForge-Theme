@@ -40,10 +40,17 @@ function fswrt_icon( $name ) {
 }
 
 /**
- * Print the FusionWrite mark: two overlapping circles.
+ * Print the FusionWrite mark: a pen nib over two overlapping circles.
  */
 function fswrt_mark() {
-	$svg = '<svg class="fw-mark" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" focusable="false"><circle class="fw-mark-a" cx="9.5" cy="13" r="7.5"/><circle class="fw-mark-b" cx="16.5" cy="13" r="7.5"/></svg>';
+	$svg = '<svg class="fw-mark" width="30" height="30" viewBox="0 0 256 256" aria-hidden="true" focusable="false">'
+		. '<circle cx="94" cy="106" r="78" fill="#3355f0"/>'
+		. '<circle cx="168" cy="158" r="78" fill="#ff7a45"/>'
+		. '<g transform="rotate(38 128 128)">'
+		. '<path d="M98 50Q98 40 108 40L148 40Q158 40 158 50L164 96C169 128 150 176 128 218C106 176 87 128 92 96Z" fill="#17191c"/>'
+		. '<path d="M128 126L128 196" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>'
+		. '<circle cx="128" cy="114" r="12" fill="#ffffff"/>'
+		. '</g></svg>';
 	echo wp_kses( $svg, fswrt_svg_kses() );
 }
 
@@ -54,16 +61,20 @@ function fswrt_mark() {
  */
 function fswrt_svg_kses() {
 	$shape = array(
-		'd'      => true,
-		'cx'     => true,
-		'cy'     => true,
-		'r'      => true,
-		'x'      => true,
-		'y'      => true,
-		'rx'     => true,
-		'width'  => true,
-		'height' => true,
-		'class'  => true,
+		'd'              => true,
+		'cx'             => true,
+		'cy'             => true,
+		'r'              => true,
+		'x'              => true,
+		'y'              => true,
+		'rx'             => true,
+		'width'          => true,
+		'height'         => true,
+		'class'          => true,
+		'fill'           => true,
+		'stroke'         => true,
+		'stroke-width'   => true,
+		'stroke-linecap' => true,
 	);
 	return array(
 		'svg'    => array(
@@ -82,5 +93,6 @@ function fswrt_svg_kses() {
 		'path'   => $shape,
 		'circle' => $shape,
 		'rect'   => $shape,
+		'g'      => array( 'transform' => true ),
 	);
 }

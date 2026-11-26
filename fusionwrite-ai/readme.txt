@@ -3,7 +3,7 @@ Contributors: mostafijemon
 Tags: ai writer, openrouter, gemini, openai, blog generator
 Requires at least: 6.0
 Tested up to: 7.2
-Stable tag: 2.0.0
+Stable tag: 2.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -115,11 +115,16 @@ Use **Back to WordPress** in the menu, or turn off the full-page option under **
 1. Overview - setup steps and connection status.
 2. Write - a topic and the options for one post.
 3. Review - the finished post in the editor.
-4. Bulk - a queue of topics with live progress.
+4. Bulk - a list of topics, written one after another.
 5. Providers - keys, models and connection tests.
 6. Guided tour.
 
 == Changelog ==
+
+= 2.0.2 =
+* New plugin icon and logo.
+* Fixed the guided tour card covering the Save and test button on the Providers step.
+* Tested with WordPress 7.2.
 
 = 2.0.0 =
 * New full-page workspace with a menu on the left and a separate page for each task.

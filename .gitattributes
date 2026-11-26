@@ -7,6 +7,7 @@
 
 # The FusionWrite AI plugin is developed here but is not part of the theme.
 /fusionwrite-ai export-ignore
+/fusionwrite-ai-wporg export-ignore
 
 # Keep line endings consistent.
 * text=auto eol=lf

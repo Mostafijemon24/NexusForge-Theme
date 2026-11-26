@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#171E58"/><stop offset="1" stop-color="#090B22"/></linearGradient>
+    <radialGradient id="orbBlue" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#7A9BFF"/><stop offset=".55" stop-color="#3355F0"/><stop offset="1" stop-color="#2137B8"/></radialGradient>
+    <radialGradient id="orbCoral" cx="0.6" cy="0.35" r="0.8"><stop offset="0" stop-color="#FFC27A"/><stop offset=".5" stop-color="#FF7A45"/><stop offset="1" stop-color="#F04A2A"/></radialGradient>
+    <linearGradient id="nib" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#DCE4FF"/></linearGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#060818" flood-opacity=".5"/></filter>
+  </defs>
+  <rect width="256" height="256" fill="url(#bg)"/>
+  <circle cx="92" cy="104" r="80" fill="#3D63FF" opacity=".5" filter="url(#soft)"/>
+  <circle cx="170" cy="160" r="80" fill="#FF6A3D" opacity=".45" filter="url(#soft)"/>
+  <circle cx="94" cy="106" r="74" fill="url(#orbBlue)"/>
+  <circle cx="168" cy="158" r="74" fill="url(#orbCoral)" style="mix-blend-mode:screen"/>
+  <g transform="rotate(38 128 128)" filter="url(#shadow)">
+    <path d="M98 50 Q98 40 108 40 L148 40 Q158 40 158 50 L164 96 C169 128 150 176 128 218 C106 176 87 128 92 96 Z" fill="url(#nib)"/>
+    <path d="M101 64 L155 64" stroke="#171E58" stroke-width="5" stroke-linecap="round"/>
+    <path d="M128 124 L128 198" stroke="#171E58" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="128" cy="116" r="10" fill="#171E58"/>
+  </g>
+  <path d="M208 24 C210.5 41 215 45.5 232 48 C215 50.5 210.5 55 208 72 C205.5 55 201 50.5 184 48 C201 45.5 205.5 41 208 24 Z" fill="#FFE2B8"/>
+  <path d="M38 190 C39.3 199 41.7 201.3 50.7 202.6 C41.7 203.9 39.3 206.3 38 215.3 C36.7 206.3 34.3 203.9 25.3 202.6 C34.3 201.3 36.7 199 38 190 Z" fill="#FFFFFF" opacity=".8"/>
+</svg>
