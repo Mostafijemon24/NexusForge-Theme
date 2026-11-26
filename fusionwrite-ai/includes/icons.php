@@ -40,16 +40,20 @@ function fswrt_icon( $name ) {
 }
 
 /**
- * Print the FusionWrite mark: a pen nib over two overlapping circles.
+ * Print the FusionWrite mark: a pen writing a W on a dark tile, the same
+ * drawing as the plugin's directory icon.
  */
 function fswrt_mark() {
-	$svg = '<svg class="fw-mark" width="30" height="30" viewBox="0 0 256 256" aria-hidden="true" focusable="false">'
-		. '<circle cx="94" cy="106" r="78" fill="#3355f0"/>'
-		. '<circle cx="168" cy="158" r="78" fill="#ff7a45"/>'
-		. '<g transform="rotate(38 128 128)">'
-		. '<path d="M98 50Q98 40 108 40L148 40Q158 40 158 50L164 96C169 128 150 176 128 218C106 176 87 128 92 96Z" fill="#17191c"/>'
-		. '<path d="M128 126L128 196" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>'
-		. '<circle cx="128" cy="114" r="12" fill="#ffffff"/>'
+	$svg = '<svg class="fw-mark" width="32" height="32" viewBox="32 32 192 192" aria-hidden="true" focusable="false">'
+		. '<defs>'
+		. '<linearGradient id="fw-mark-tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#111a55"/><stop offset="1" stop-color="#2b1268"/></linearGradient>'
+		. '<linearGradient id="fw-mark-w" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#49ebff"/><stop offset="0.5" stop-color="#5e93ff"/><stop offset="1" stop-color="#e3a2ff"/></linearGradient>'
+		. '</defs>'
+		. '<rect x="36" y="36" width="184" height="184" rx="44" fill="url(#fw-mark-tile)"/>'
+		. '<path d="M96 116C99 144 104 180 113 180C123 180 125 138 133 138C141 138 143 180 153 180C164 180 171 142 178 108" fill="none" stroke="url(#fw-mark-w)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>'
+		. '<g transform="translate(80.3 97.3) rotate(140) scale(0.72)">'
+		. '<path d="M-12 -30Q-12 -35 -7 -35L7 -35Q12 -35 12 -30L14.5 -10C17 5 8 32 0 54C-8 32 -17 5 -14.5 -10Z" fill="#dff4ff"/>'
+		. '<circle cx="0" cy="0" r="5" fill="#12205e"/>'
 		. '</g></svg>';
 	echo wp_kses( $svg, fswrt_svg_kses() );
 }
@@ -61,23 +65,24 @@ function fswrt_mark() {
  */
 function fswrt_svg_kses() {
 	$shape = array(
-		'd'              => true,
-		'cx'             => true,
-		'cy'             => true,
-		'r'              => true,
-		'x'              => true,
-		'y'              => true,
-		'rx'             => true,
-		'width'          => true,
-		'height'         => true,
-		'class'          => true,
-		'fill'           => true,
-		'stroke'         => true,
-		'stroke-width'   => true,
-		'stroke-linecap' => true,
+		'd'               => true,
+		'cx'              => true,
+		'cy'              => true,
+		'r'               => true,
+		'x'               => true,
+		'y'               => true,
+		'rx'              => true,
+		'width'           => true,
+		'height'          => true,
+		'class'           => true,
+		'fill'            => true,
+		'stroke'          => true,
+		'stroke-width'    => true,
+		'stroke-linecap'  => true,
+		'stroke-linejoin' => true,
 	);
 	return array(
-		'svg'    => array(
+		'svg'            => array(
 			'class'           => true,
 			'width'           => true,
 			'height'          => true,
@@ -90,9 +95,21 @@ function fswrt_svg_kses() {
 			'aria-hidden'     => true,
 			'focusable'       => true,
 		),
-		'path'   => $shape,
-		'circle' => $shape,
-		'rect'   => $shape,
-		'g'      => array( 'transform' => true ),
+		'path'           => $shape,
+		'circle'         => $shape,
+		'rect'           => $shape,
+		'g'              => array( 'transform' => true ),
+		'defs'           => array(),
+		'lineargradient' => array(
+			'id' => true,
+			'x1' => true,
+			'y1' => true,
+			'x2' => true,
+			'y2' => true,
+		),
+		'stop'           => array(
+			'offset'     => true,
+			'stop-color' => true,
+		),
 	);
 }
